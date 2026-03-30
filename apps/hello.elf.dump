@@ -1,0 +1,51 @@
+
+hello.elf:     file format elf32-xtensa-le
+
+
+Disassembly of section .text:
+
+00400074 <main-0x10>:
+  400074:	004000d4 	
+  400078:	004000bc 	
+  40007c:	004010e4 	
+  400080:	00400084 	
+
+00400084 <main>:
+  400084:	006136        	entry	a1, 48
+  400087:	017d      	mov.n	a7, a1
+  400089:	0729      	s32i.n	a2, a7, 0
+  40008b:	1739      	s32i.n	a3, a7, 4
+  40008d:	fff981        	l32r	a8, 400074 <main-0x10> (4000d4 <print+0x18>)
+  400090:	08ad      	mov.n	a10, a8
+  400092:	fff981        	l32r	a8, 400078 <main-0xc> (4000bc <print>)
+  400095:	0008e0        	callx8	a8
+  400098:	080c      	movi.n	a8, 0
+  40009a:	082d      	mov.n	a2, a8
+  40009c:	f01d      	retw.n
+	...
+
+004000a0 <_start>:
+  4000a0:	006136        	entry	a1, 48
+  4000a3:	017d      	mov.n	a7, a1
+  4000a5:	0729      	s32i.n	a2, a7, 0
+  4000a7:	0798      	l32i.n	a9, a7, 0
+  4000a9:	fff481        	l32r	a8, 40007c <main-0x8> (4010e4 <do_syscall>)
+  4000ac:	0899      	s32i.n	a9, a8, 0
+  4000ae:	0b0c      	movi.n	a11, 0
+  4000b0:	0a0c      	movi.n	a10, 0
+  4000b2:	fff381        	l32r	a8, 400080 <main-0x4> (400084 <main>)
+  4000b5:	0008e0        	callx8	a8
+  4000b8:	f03d      	nop.n
+  4000ba:	f01d      	retw.n
+
+004000bc <print>:
+  4000bc:	006136        	entry	a1, 48
+  4000bf:	017d      	mov.n	a7, a1
+  4000c1:	0729      	s32i.n	a2, a7, 0
+  4000c3:	ffee81        	l32r	a8, 40007c <main-0x8> (4010e4 <do_syscall>)
+  4000c6:	0888      	l32i.n	a8, a8, 0
+  4000c8:	07b8      	l32i.n	a11, a7, 0
+  4000ca:	01a0a2        	movi	a10, 1
+  4000cd:	0008e0        	callx8	a8
+  4000d0:	f03d      	nop.n
+  4000d2:	f01d      	retw.n

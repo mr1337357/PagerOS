@@ -1,19 +1,21 @@
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7796S.h>
+#include <IoExpanderXL9555.hpp>
 #include <SPI.h>
+#include <SD.h>
 
-#define SCLK          35
-#define MOSI          34
-#define MISO          33
-
-extern SPIClass* hspi;
-
-#define TFT_CS        38
-#define TFT_RST       -1
-#define TFT_DC        37
+extern SPIClass hspi;
 
 extern Adafruit_ST7796S tft;
 
-#define SD_CS         21
+extern IoExpanderXL9555 io;
+
+const uint8_t GPIOs[] = 
+{
+  DISP_CS,
+  DISP_DC,
+  SD_CS,
+
+};
 
 void hal_init();
