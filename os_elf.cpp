@@ -21,6 +21,7 @@ uint32_t elf_load_sections(File &app, int phoff, int phnum, uint32_t entry)
 
   uint32_t codeaddr;
   uint32_t codevaddr;
+  uint32_t codepaddr;
   uint32_t codeend;
   uint32_t code_offset;
 
@@ -42,11 +43,12 @@ uint32_t elf_load_sections(File &app, int phoff, int phnum, uint32_t entry)
   num_pointers = (entry-phdr.p_vaddr)/sizeof(uint32_t);
   phoff += sizeof(phdr); //this is wrong but I like to assume things
   codeaddr = elf_place_in_ram(app,phdr.p_offset,phdr.p_filesz,phdr.p_memsz);
+  codepaddr = codeaddr + 0x6000000;
   codevaddr = phdr.p_vaddr;
   codeend = phdr.p_memsz + codevaddr;
-  code_offset = codevaddr - codeaddr;
+  code_offset = codevaddr - codepaddr;
   entry_offset = entry - phdr.p_vaddr;
-  entry = codeaddr + entry_offset;
+  entry = codeaddr + entry_offset + 0x6000000;
 
   app.seek(phoff);
   app.read((uint8_t *)&phdr,sizeof(phdr));
@@ -55,15 +57,16 @@ uint32_t elf_load_sections(File &app, int phoff, int phnum, uint32_t entry)
   dataend = phdr.p_memsz + datavaddr;
   data_offset = datavaddr - dataaddr;
   reloc_table = (uint32_t *)codeaddr;
+  Serial.printf("datavaddr %08X dataend %08X\n", datavaddr, dataend);
   for(i=0;i<num_pointers;i++)
   {
-    if(reloc_table[i] > codevaddr && reloc_table[i] < codeend)
+    if(reloc_table[i] >= codevaddr && reloc_table[i] <= codeend)
     {
       Serial.printf("reloc %08X",reloc_table[i]);
       reloc_table[i] -= code_offset;
       Serial.printf(" to %08X\n",reloc_table[i]);
     }
-    else if(reloc_table[i] > datavaddr && reloc_table[i] < dataend)
+    else if(reloc_table[i] >= datavaddr && reloc_table[i] <= dataend)
     {
       Serial.printf("reloc %08X",reloc_table[i]);
       reloc_table[i] -= data_offset;
@@ -71,6 +74,12 @@ uint32_t elf_load_sections(File &app, int phoff, int phnum, uint32_t entry)
     }
   }
   Serial.printf("new entry %08X\n",entry);
+  reloc_table = (uint32_t *)(entry-0x6000000);
+  for(i=0;i<16;i++)
+  {
+    Serial.printf("%08X ",reloc_table[i]);
+  }
+  Serial.printf("\n");
   return entry;
 }
 

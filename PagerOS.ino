@@ -6,10 +6,11 @@ uint8_t *psram_ptr = (uint8_t *)0x3C060000;
 char app_name_buffer[128];
 void do_syscall(int callnum, void *arg)
 {
+  Serial.printf("do_syscall %d %p\n",callnum,arg);
   switch(callnum)
   {
     case 1:
-      Serial.print((char *)arg);
+      //Serial.print((char *)arg);
       break;
   }
 }
@@ -43,6 +44,8 @@ int get_free_thread()
   return -1;
 }
 
+extern "C" void Cache_WriteBack_All(void);
+
 void thread_runner(void *args)
 {
   char *filename = (char *)args;
@@ -53,6 +56,8 @@ void thread_runner(void *args)
   pid = get_current_thread();
   entry = (void (*)(void*))loadElf(SD,filename);
   Serial.printf("entry %08X\n",entry);
+  Serial.printf("do_syscall %08X\n",do_syscall);
+  Cache_WriteBack_All();
   Serial.printf("app start\n");
   if(entry != 0)
   {
