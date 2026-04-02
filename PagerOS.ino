@@ -6,11 +6,10 @@ uint8_t *psram_ptr = (uint8_t *)0x3C060000;
 char app_name_buffer[128];
 void do_syscall(int callnum, void *arg)
 {
-  Serial.printf("do_syscall %d %p\n",callnum,arg);
   switch(callnum)
   {
     case 1:
-      //Serial.print((char *)arg);
+      Serial.print((char *)arg);
       break;
   }
 }

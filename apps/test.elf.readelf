@@ -8,7 +8,7 @@ ELF Header:
   Type:                              EXEC (Executable file)
   Machine:                           Tensilica Xtensa Processor
   Version:                           0x1
-  Entry point address:               0x4000a4
+  Entry point address:               0x400084
   Start of program headers:          52 (bytes into file)
   Start of section headers:          932 (bytes into file)
   Flags:                             0x300
@@ -22,7 +22,7 @@ ELF Header:
 Section Headers:
   [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
   [ 0]                   NULL            00000000 000000 000000 00      0   0  0
-  [ 1] .text             PROGBITS        00400074 000074 000064 00  AX  0   0  4
+  [ 1] .text             PROGBITS        00400074 000074 000063 00  AX  0   0  4
   [ 2] .data             PROGBITS        004010d8 0000d8 000004 00  WA  0   0  4
   [ 3] .bss              NOBITS          004010dc 0000dc 000008 00  WA  0   0  4
   [ 4] .comment          PROGBITS        00000000 0000dc 00002f 01  MS  0   0  1
@@ -42,7 +42,7 @@ There are no section groups in this file.
 
 Program Headers:
   Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
-  LOAD           0x000000 0x00400000 0x00400000 0x000d8 0x000d8 R E 0x1000
+  LOAD           0x000000 0x00400000 0x00400000 0x000d7 0x000d7 R E 0x1000
   LOAD           0x0000d8 0x004010d8 0x004010d8 0x00004 0x0000c RW  0x1000
 
  Section to Segment mapping:
@@ -66,15 +66,15 @@ Symbol table '.symtab' contains 19 entries:
      5: 00000000     0 SECTION LOCAL  DEFAULT    5 .xtensa.info
      6: 00000000     0 SECTION LOCAL  DEFAULT    6 .xt.lit
      7: 00000000     0 SECTION LOCAL  DEFAULT    7 .xt.prop
-     8: 00000000     0 FILE    LOCAL  DEFAULT  ABS test.c
-     9: 00000000     0 FILE    LOCAL  DEFAULT  ABS lib.c
-    10: 004000c0    24 FUNC    GLOBAL DEFAULT    1 print
-    11: 004010e0     4 OBJECT  GLOBAL DEFAULT    3 do_syscall
-    12: 004000a4    28 FUNC    GLOBAL DEFAULT    1 _start
+     8: 00000000     0 FILE    LOCAL  DEFAULT  ABS lib.c
+     9: 00000000     0 FILE    LOCAL  DEFAULT  ABS test.c
+    10: 004000a0    24 FUNC    GLOBAL DEFAULT    1 print
+    11: 004010dc     4 OBJECT  GLOBAL DEFAULT    3 do_syscall
+    12: 00400084    28 FUNC    GLOBAL DEFAULT    1 _start
     13: 004010d8     4 OBJECT  GLOBAL DEFAULT    2 global
     14: 004010dc     0 NOTYPE  GLOBAL DEFAULT    3 __bss_start
-    15: 00400084    31 FUNC    GLOBAL DEFAULT    1 main
-    16: 004010dc     4 OBJECT  GLOBAL DEFAULT    3 otherglobal
+    15: 004000b8    31 FUNC    GLOBAL DEFAULT    1 main
+    16: 004010e0     4 OBJECT  GLOBAL DEFAULT    3 otherglobal
     17: 004010dc     0 NOTYPE  GLOBAL DEFAULT    2 _edata
     18: 004010e4     0 NOTYPE  GLOBAL DEFAULT    3 _end
 
