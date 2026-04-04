@@ -3,6 +3,9 @@
 #include <IoExpanderXL9555.hpp>
 #include <SPI.h>
 #include <SD.h>
+#include "textbox.h"
+
+extern textbox tb;
 
 extern SPIClass hspi;
 

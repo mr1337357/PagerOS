@@ -1,4 +1,7 @@
 #include "hal.h"
+#include "textbox.h"
+
+textbox tb;
 
 SPIClass hspi(HSPI);
 
@@ -12,7 +15,7 @@ typedef struct
   uint8_t value;
 } pinconfig;
 
-pinconfig pinconfigs[] = 
+pinconfig pinconfigs_ext[] = 
 {
   {OUTPUT, LOW}, //Haptic en
   {OUTPUT, LOW}, //Amp en
@@ -32,7 +35,17 @@ pinconfig pinconfigs[] =
   {INPUT, LOW},
 };
 
-#define NUM_PINCONFIGS (sizeof(pinconfigs)/sizeof(pinconfigs[0]))
+#define NUM_PINCONFIGS_EXT (sizeof(pinconfigs_ext)/sizeof(pinconfigs_ext[0]))
+
+uint8_t cspins[] = 
+{
+  SD_CS,
+  NFC_CS,
+  LORA_CS,
+  DISP_CS,
+};
+
+#define NUM_CSPINS (sizeof(cspins)/sizeof(cspins[0]))
 
 void hal_init()
 {
@@ -41,39 +54,48 @@ void hal_init()
 
   io.begin(Wire, 0x20);
 
-  for(i=0;i<NUM_PINCONFIGS;i++)
+  for(i=0;i<NUM_PINCONFIGS_EXT;i++)
   {
     delay(1);
-    io.pinMode(i, pinconfigs[i].mode);
-    if(pinconfigs[i].mode == OUTPUT)
+    io.pinMode(i, pinconfigs_ext[i].mode);
+    if(pinconfigs_ext[i].mode == OUTPUT)
     {
-      io.digitalWrite(i, pinconfigs[i].value);
+      io.digitalWrite(i, pinconfigs_ext[i].value);
     }
   }
 
+  for(i=0;i<NUM_CSPINS;i++)
+  {
+    pinMode(cspins[i],OUTPUT);
+    digitalWrite(cspins[i],HIGH);
+  }
+
   hspi.begin(SCK,MISO,MOSI,-1);
+  hspi.setFrequency(100000);
 
   pinMode(42,OUTPUT);
   analogWrite(42,128);
 
   tft.init(222, 480, 0, 49, ST7796S_BGR);
+  tb.begin(tft, 0, 0, 480, 222);
   tft.setRotation(3);
-  tft.setCursor(0, 0);
   tft.setTextColor(ST77XX_WHITE);
   tft.setTextWrap(true);
   tft.fillScreen(ST77XX_BLACK);
+  
+  tb.printf("Starting up...\n");
 
   delay(100);
   //io.digitalWrite(EXPANDS_SD_EN, HIGH);
-  tft.setCursor(0, 0);
+  tft.setCursor(20, 0);
   if (!SD.begin(SD_CS, hspi))
   {
-    tft.printf("SD: Fail\n");
+    tb.printf("sd not loaded\n");
     Serial.println("Failed to detect SD Card!!");
   }
   else
   {
-    tft.printf("SD: Pass\n");
+    tb.printf("sd found\n");
     Serial.println("detected SD card\n");
   }
 }
