@@ -73,7 +73,6 @@ uint32_t elf_load_sections(File &app, uint32_t e_entry, int e_shoff, int e_shnum
       uint32_t got_meta[4];
       app.seek(shdr.sh_offset);
       app.read((uint8_t *)got_meta,16);
-      Serial.printf(".XT.LIT\n");
       global_table_size = got_meta[1];
       global_table_size += got_meta[3];
       global_table_size /= 4;
@@ -88,24 +87,24 @@ uint32_t elf_load_sections(File &app, uint32_t e_entry, int e_shoff, int e_shnum
   {
     if(global_table[i] >= text_vaddr && global_table[i] <= text_vaddr + text_len)
     {
-      Serial.printf("function pointer %08X\n",global_table[i]);
+      Serial.printf("function pointer %08X",global_table[i]);
       global_table[i] -= text_vaddr;
       global_table[i] += text;
       global_table[i] += 0x6000000; //hardware thing
     }
     if(global_table[i] >= rodata_vaddr && global_table[i] <= rodata_vaddr + rodata_len)
     {
-      Serial.printf("rodata pointer %08X\n",global_table[i]);
+      Serial.printf("rodata pointer %08X",global_table[i]);
       global_table[i] -= rodata_vaddr;
       global_table[i] += rodata;
     }
     if(global_table[i] >= bss_vaddr && global_table[i] <= bss_vaddr + bss_len)
     {
-      Serial.printf("bss pointer %08X\n",global_table[i]);
+      Serial.printf("bss pointer %08X",global_table[i]);
       global_table[i] -= bss_vaddr;
       global_table[i] += bss;
     }
-    Serial.printf("global pointer %08X\n",global_table[i]);
+    Serial.printf(" => %08X\n",global_table[i]);
   }
   e_entry -= text_vaddr;
   e_entry += text;

@@ -15,11 +15,16 @@ SemaphoreHandle_t psram_sem;
 void psram_init(uint32_t start, uint32_t size)
 {
   int i;
+  uint8_t *psram_ptr = (uint8_t *)start;
   psram_start = start;
-  psram_size = size;
+  psram_size = size / 4096;
   for(i=0;i<64;i++)
   {
     psram_allocations[i] = 0xFF;
+  }
+  for(i=0;i<size;i++)
+  {
+    psram_ptr[i] = 0x55;
   }
   psram_sem = xSemaphoreCreateMutex();
 }
@@ -28,7 +33,7 @@ void *psram_get_blocks(int numblocks)
 {
   int i;
   int j;
-  for(i=0;(i+numblocks)<2048;i++)
+  for(i=0;(i+numblocks)<psram_size;i++)
   {
     if(psram_allocations[i] == 0xFF)
     {
@@ -60,7 +65,7 @@ void psram_free_blocks(void *address)
 void psram_thread_killed(int thread)
 {
 int i;
-for(i=0;i<2048;i++)
+for(i=0;i<psram_size;i++)
   {
     if(psram_allocations[i] == thread)
     {

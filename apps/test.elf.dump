@@ -4,50 +4,156 @@ test.elf:     file format elf32-xtensa-le
 
 Disassembly of section .text:
 
-00400074 <_start-0x10>:
-  400074:	004010dc 	
-  400078:	004000b8 	
-  40007c:	004010e0 	
-  400080:	004010d8 	
+00400074 <strlen-0x14>:
+  400074:	00400180 	
+  400078:	004011b4 	
+  40007c:	00400190 	
+  400080:	004011b8 	
+  400084:	004011b0 	
 
-00400084 <_start>:
-  400084:	006136        	entry	a1, 48
-  400087:	017d      	mov.n	a7, a1
-  400089:	0729      	s32i.n	a2, a7, 0
-  40008b:	0798      	l32i.n	a9, a7, 0
-  40008d:	fff981        	l32r	a8, 400074 <_start-0x10> (4010dc <do_syscall>)
-  400090:	0899      	s32i.n	a9, a8, 0
-  400092:	0b0c      	movi.n	a11, 0
-  400094:	0a0c      	movi.n	a10, 0
-  400096:	fff881        	l32r	a8, 400078 <_start-0xc> (4000b8 <main>)
-  400099:	0008e0        	callx8	a8
-  40009c:	f03d      	nop.n
-  40009e:	f01d      	retw.n
+00400088 <strlen>:
+  400088:	008136        	entry	a1, 64
+  40008b:	017d      	mov.n	a7, a1
+  40008d:	4729      	s32i.n	a2, a7, 16
+  40008f:	080c      	movi.n	a8, 0
+  400091:	0789      	s32i.n	a8, a7, 0
+  400093:	000146        	j	40009c <strlen+0x14>
+  400096:	0788      	l32i.n	a8, a7, 0
+  400098:	881b      	addi.n	a8, a8, 1
+  40009a:	0789      	s32i.n	a8, a7, 0
+  40009c:	4788      	l32i.n	a8, a7, 16
+  40009e:	981b      	addi.n	a9, a8, 1
+  4000a0:	4799      	s32i.n	a9, a7, 16
+  4000a2:	000882        	l8ui	a8, a8, 0
+  4000a5:	fed856        	bnez	a8, 400096 <strlen+0xe>
+  4000a8:	0788      	l32i.n	a8, a7, 0
+  4000aa:	082d      	mov.n	a2, a8
+  4000ac:	f01d      	retw.n
+	...
 
-004000a0 <print>:
-  4000a0:	006136        	entry	a1, 48
-  4000a3:	017d      	mov.n	a7, a1
-  4000a5:	0729      	s32i.n	a2, a7, 0
-  4000a7:	fff381        	l32r	a8, 400074 <_start-0x10> (4010dc <do_syscall>)
-  4000aa:	0888      	l32i.n	a8, a8, 0
-  4000ac:	07b8      	l32i.n	a11, a7, 0
-  4000ae:	01a0a2        	movi	a10, 1
-  4000b1:	0008e0        	callx8	a8
-  4000b4:	f03d      	nop.n
-  4000b6:	f01d      	retw.n
+004000b0 <_start>:
+  4000b0:	008136        	entry	a1, 64
+  4000b3:	017d      	mov.n	a7, a1
+  4000b5:	4729      	s32i.n	a2, a7, 16
+  4000b7:	080c      	movi.n	a8, 0
+  4000b9:	0789      	s32i.n	a8, a7, 0
+  4000bb:	ffee81        	l32r	a8, 400074 <strlen-0x14> (400180 <event_handler>)
+  4000be:	1789      	s32i.n	a8, a7, 4
+  4000c0:	4798      	l32i.n	a9, a7, 16
+  4000c2:	ffed81        	l32r	a8, 400078 <strlen-0x10> (4011b4 <do_syscall>)
+  4000c5:	0899      	s32i.n	a9, a8, 0
+  4000c7:	ffec81        	l32r	a8, 400078 <strlen-0x10> (4011b4 <do_syscall>)
+  4000ca:	0888      	l32i.n	a8, a8, 0
+  4000cc:	20b770        	or	a11, a7, a7
+  4000cf:	0a0c      	movi.n	a10, 0
+  4000d1:	0008e0        	callx8	a8
+  4000d4:	0b0c      	movi.n	a11, 0
+  4000d6:	0a0c      	movi.n	a10, 0
+  4000d8:	ffe981        	l32r	a8, 40007c <strlen-0xc> (400190 <main>)
+  4000db:	0008e0        	callx8	a8
+  4000de:	f03d      	nop.n
+  4000e0:	f01d      	retw.n
+	...
 
-004000b8 <main>:
-  4000b8:	006136        	entry	a1, 48
-  4000bb:	017d      	mov.n	a7, a1
-  4000bd:	0729      	s32i.n	a2, a7, 0
-  4000bf:	1739      	s32i.n	a3, a7, 4
-  4000c1:	ffee81        	l32r	a8, 40007c <_start-0x8> (4010e0 <otherglobal>)
-  4000c4:	490c      	movi.n	a9, 4
-  4000c6:	0899      	s32i.n	a9, a8, 0
-  4000c8:	ffee81        	l32r	a8, 400080 <_start-0x4> (4010d8 <global>)
-  4000cb:	590c      	movi.n	a9, 5
-  4000cd:	0899      	s32i.n	a9, a8, 0
-  4000cf:	0788      	l32i.n	a8, a7, 0
-  4000d1:	880b      	addi.n	a8, a8, -1
-  4000d3:	082d      	mov.n	a2, a8
-  4000d5:	f01d      	retw.n
+004000e4 <write>:
+  4000e4:	008136        	entry	a1, 64
+  4000e7:	017d      	mov.n	a7, a1
+  4000e9:	4729      	s32i.n	a2, a7, 16
+  4000eb:	5739      	s32i.n	a3, a7, 20
+  4000ed:	6749      	s32i.n	a4, a7, 24
+  4000ef:	180c      	movi.n	a8, 1
+  4000f1:	0789      	s32i.n	a8, a7, 0
+  4000f3:	4788      	l32i.n	a8, a7, 16
+  4000f5:	1789      	s32i.n	a8, a7, 4
+  4000f7:	5788      	l32i.n	a8, a7, 20
+  4000f9:	3789      	s32i.n	a8, a7, 12
+  4000fb:	6788      	l32i.n	a8, a7, 24
+  4000fd:	2789      	s32i.n	a8, a7, 8
+  4000ff:	ffde81        	l32r	a8, 400078 <strlen-0x10> (4011b4 <do_syscall>)
+  400102:	0888      	l32i.n	a8, a8, 0
+  400104:	07bd      	mov.n	a11, a7
+  400106:	01a0a2        	movi	a10, 1
+  400109:	0008e0        	callx8	a8
+  40010c:	0a8d      	mov.n	a8, a10
+  40010e:	082d      	mov.n	a2, a8
+  400110:	f01d      	retw.n
+	...
+
+00400114 <read>:
+  400114:	008136        	entry	a1, 64
+  400117:	017d      	mov.n	a7, a1
+  400119:	4729      	s32i.n	a2, a7, 16
+  40011b:	5739      	s32i.n	a3, a7, 20
+  40011d:	6749      	s32i.n	a4, a7, 24
+  40011f:	080c      	movi.n	a8, 0
+  400121:	0789      	s32i.n	a8, a7, 0
+  400123:	4788      	l32i.n	a8, a7, 16
+  400125:	1789      	s32i.n	a8, a7, 4
+  400127:	5788      	l32i.n	a8, a7, 20
+  400129:	3789      	s32i.n	a8, a7, 12
+  40012b:	6788      	l32i.n	a8, a7, 24
+  40012d:	2789      	s32i.n	a8, a7, 8
+  40012f:	ffd281        	l32r	a8, 400078 <strlen-0x10> (4011b4 <do_syscall>)
+  400132:	0888      	l32i.n	a8, a8, 0
+  400134:	07bd      	mov.n	a11, a7
+  400136:	01a0a2        	movi	a10, 1
+  400139:	0008e0        	callx8	a8
+  40013c:	0a8d      	mov.n	a8, a10
+  40013e:	082d      	mov.n	a2, a8
+  400140:	f01d      	retw.n
+	...
+
+00400144 <print>:
+  400144:	006136        	entry	a1, 48
+  400147:	017d      	mov.n	a7, a1
+  400149:	0729      	s32i.n	a2, a7, 0
+  40014b:	0027a2        	l32i	a10, a7, 0
+  40014e:	fff3a5        	call8	400088 <strlen>
+  400151:	0a8d      	mov.n	a8, a10
+  400153:	08cd      	mov.n	a12, a8
+  400155:	07b8      	l32i.n	a11, a7, 0
+  400157:	0a0c      	movi.n	a10, 0
+  400159:	fff8a5        	call8	4000e4 <write>
+  40015c:	f03d      	nop.n
+  40015e:	f01d      	retw.n
+
+00400160 <delay>:
+  400160:	008136        	entry	a1, 64
+  400163:	017d      	mov.n	a7, a1
+  400165:	4729      	s32i.n	a2, a7, 16
+  400167:	180c      	movi.n	a8, 1
+  400169:	0789      	s32i.n	a8, a7, 0
+  40016b:	4788      	l32i.n	a8, a7, 16
+  40016d:	1789      	s32i.n	a8, a7, 4
+  40016f:	ffc281        	l32r	a8, 400078 <strlen-0x10> (4011b4 <do_syscall>)
+  400172:	0888      	l32i.n	a8, a8, 0
+  400174:	07bd      	mov.n	a11, a7
+  400176:	00a0a2        	movi	a10, 0
+  400179:	0008e0        	callx8	a8
+  40017c:	f03d      	nop.n
+  40017e:	f01d      	retw.n
+
+00400180 <event_handler>:
+  400180:	006136        	entry	a1, 48
+  400183:	017d      	mov.n	a7, a1
+  400185:	0729      	s32i.n	a2, a7, 0
+  400187:	1739      	s32i.n	a3, a7, 4
+  400189:	f03d      	nop.n
+  40018b:	f01d      	retw.n
+  40018d:	000000        	ill
+
+00400190 <main>:
+  400190:	006136        	entry	a1, 48
+  400193:	017d      	mov.n	a7, a1
+  400195:	0729      	s32i.n	a2, a7, 0
+  400197:	1739      	s32i.n	a3, a7, 4
+  400199:	ffb981        	l32r	a8, 400080 <strlen-0x8> (4011b8 <otherglobal>)
+  40019c:	490c      	movi.n	a9, 4
+  40019e:	0899      	s32i.n	a9, a8, 0
+  4001a0:	ffb981        	l32r	a8, 400084 <strlen-0x4> (4011b0 <global>)
+  4001a3:	590c      	movi.n	a9, 5
+  4001a5:	0899      	s32i.n	a9, a8, 0
+  4001a7:	0788      	l32i.n	a8, a7, 0
+  4001a9:	880b      	addi.n	a8, a8, -1
+  4001ab:	082d      	mov.n	a2, a8
+  4001ad:	f01d      	retw.n

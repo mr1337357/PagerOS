@@ -9,6 +9,8 @@ Adafruit_ST7796S tft = Adafruit_ST7796S(&hspi, DISP_CS, DISP_DC, DISP_RST);
 
 IoExpanderXL9555 io; 
 
+Adafruit_TCA8418 keypad;
+
 typedef struct
 {
   uint8_t mode;
@@ -25,7 +27,7 @@ pinconfig pinconfigs_ext[] =
   {OUTPUT, LOW}, //rf en
   {OUTPUT, LOW}, //lcd rst
   {INPUT, LOW}, //gps rst
-  {INPUT, LOW}, //KEY EN
+  {OUTPUT, HIGH}, //KEY EN
   {INPUT, LOW}, //NRF CE
   {INPUT, LOW}, //SD DET
   {OUTPUT, HIGH}, //SPI PULLUP EN
@@ -85,9 +87,10 @@ void hal_init()
   
   tb.printf("Starting up...\n");
 
+  io.digitalWrite(2, HIGH);
+
   delay(100);
   //io.digitalWrite(EXPANDS_SD_EN, HIGH);
-  tft.setCursor(20, 0);
   if (!SD.begin(SD_CS, hspi))
   {
     tb.printf("sd not loaded\n");
@@ -97,5 +100,10 @@ void hal_init()
   {
     tb.printf("sd found\n");
     Serial.println("detected SD card\n");
+  }
+
+  if (! keypad.begin(TCA8418_DEFAULT_ADDR, &Wire)) {
+    Serial.println("keypad not found, check wiring & pullups!");
+    while (1);
   }
 }
