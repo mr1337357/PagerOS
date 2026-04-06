@@ -4,8 +4,6 @@
 #include "os_process.h"
 #include "fileops.h"
 
-uint8_t *psram_ptr = (uint8_t *)0x3C060000;
-
 typedef struct
 {
   int op;
@@ -61,9 +59,8 @@ void setup() {
   Serial.begin(115200);
   //tft.fillScreen(ST77XX_BLACK);
   hal_init();
-  uint8_t *psram_ptr = (uint8_t *)ps_malloc(7 * 1024 * 1024);
   psramInit();
-  psram_init((uint32_t)psram_ptr, 7 * 1024 * 1024);
+  psram_init();
   process_init();
   tb.set_visible(false);
   tft.fillScreen(0);

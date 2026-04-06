@@ -1,75 +1,77 @@
+#include <Arduino.h>
 #include <stdint.h>
 #include "FreeRTOS.h"
 #include "psram_alloc.h"
-//#include "semphr.h"
+#include "esp32-hal-psram.h"
+
+struct alloc_meta_struct
+{
+  struct alloc_meta_struct *next_alloc;
+  uint32_t thread_id;
+  uint8_t buffer[];
+};
+typedef struct alloc_meta_struct alloc_meta;
+
+alloc_meta *alloc_head;
 
 int get_current_thread();
 
-uint32_t psram_start = 0;
-uint32_t psram_size = 0;
-
-uint8_t psram_allocations[2048];
-
-SemaphoreHandle_t psram_sem;
-
-void psram_init(uint32_t start, uint32_t size)
+void psram_init()
 {
-  int i;
-  uint8_t *psram_ptr = (uint8_t *)start;
-  psram_start = start;
-  psram_size = size / 4096;
-  for(i=0;i<64;i++)
-  {
-    psram_allocations[i] = 0xFF;
-  }
-  for(i=0;i<size;i++)
-  {
-    psram_ptr[i] = 0x55;
-  }
-  psram_sem = xSemaphoreCreateMutex();
+  alloc_head = (alloc_meta *)malloc(8);
+  alloc_head->next_alloc = 0;
+  alloc_head->thread_id = 0;
 }
 
-void *psram_get_blocks(int numblocks)
+void *psram_malloc(int size)
 {
-  int i;
-  int j;
-  for(i=0;(i+numblocks)<psram_size;i++)
+  alloc_meta *list;
+  alloc_meta *block;
+  block = (alloc_meta *)ps_malloc(8 + size);
+  Serial.printf("malloc size %d\n",size);
+  block->next_alloc = 0;
+  block->thread_id = get_current_thread();
+  for(list = alloc_head; list->next_alloc; list = list->next_alloc)
   {
-    if(psram_allocations[i] == 0xFF)
+
+  }
+  list->next_alloc = block;
+  return block->buffer;
+}
+
+void psram_free(void *address)
+{
+  uint8_t *fudge_factor;
+  alloc_meta *list;
+  alloc_meta *block;
+  fudge_factor = (uint8_t *)address;
+  block = (alloc_meta *)&fudge_factor[-8];
+  for(list = alloc_head; list->next_alloc; list = list->next_alloc)
+  {
+    if(list->next_alloc == block)
     {
-      for(j=1;j<numblocks;j++)
-      {
-        if(psram_allocations[i+j] != 0xFF)
-        {
-          break;
-        }
-      }
-      if(j == numblocks)
-      {
-        for(j=0;j<numblocks;j++)
-        {
-          psram_allocations[i+j] = get_current_thread();
-        }
-        return (void *)(psram_start + (i * PSRAM_BLOCKSIZE));
-      }
+      list->next_alloc = block->next_alloc;
+      free(block);
+      break;
     }
   }
-  return 0;
-}
-
-void psram_free_blocks(void *address)
-{
-
 }
 
 void psram_thread_killed(int thread)
 {
-int i;
-for(i=0;i<psram_size;i++)
+  int pid = get_current_thread();
+  alloc_meta *list;
+  alloc_meta *temp;
+  for(list = alloc_head; list->next_alloc; list = list->next_alloc)
   {
-    if(psram_allocations[i] == thread)
+    if(list->next_alloc)
     {
-      psram_allocations[i] = 0;
+      if(list->next_alloc->thread_id == pid)
+      {
+        temp = list->next_alloc;
+        list->next_alloc = list->next_alloc->next_alloc;
+        free(temp);
+      }
     }
   }
 }

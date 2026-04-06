@@ -16,7 +16,7 @@ void elf_get_strtab(File &app, int e_shoff, int e_shstrndx, char *strtab)
 
 uint32_t elf_place_in_ram(File &app, int offset, int filesize, int ramsize)
 {
-  uint8_t *mem = (uint8_t *)psram_get_blocks((ramsize+PSRAM_BLOCKSIZE-1)/PSRAM_BLOCKSIZE);
+  uint8_t *mem = (uint8_t *)psram_malloc(ramsize);
   app.seek(offset);
   app.read(mem,filesize);
   return (uint32_t)mem;
@@ -80,8 +80,8 @@ uint32_t elf_load_sections(File &app, uint32_t e_entry, int e_shoff, int e_shnum
     }
   }
   Serial.printf("Text %08X => %08X\n",text_vaddr, text);
-  Serial.printf("Rodata %08X\n",rodata);
-  Serial.printf("Bss %08X\n",bss);
+  Serial.printf("Rodata %08X => %08X\n",rodata_vaddr, rodata);
+  Serial.printf("Bss %08X => %08X\n",bss_vaddr,bss);
   global_table = (uint32_t *)text;
   for(i=0;i<global_table_size;i++)
   {
