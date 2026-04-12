@@ -1,0 +1,117 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Tensilica Xtensa Processor
+  Version:                           0x1
+  Entry point address:               0x4000ec
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          7868 (bytes into file)
+  Flags:                             0x300
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         2
+  Size of section headers:           40 (bytes)
+  Number of section headers:         19
+  Section header string table index: 18
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00400074 000074 0003d3 00  AX  0   0  4
+  [ 2] .rodata           PROGBITS        00400448 000448 000022 00   A  0   0  4
+  [ 3] .data             PROGBITS        0040146c 00046c 000011 00  WA  0   0  4
+  [ 4] .bss              NOBITS          00401480 00047d 000414 00  WA  0   0  4
+  [ 5] .comment          PROGBITS        00000000 00047d 00002f 01  MS  0   0  1
+  [ 6] .xtensa.info      NOTE            00000000 0004ac 000038 00      0   0  1
+  [ 7] .debug_aranges    PROGBITS        00000000 0004e4 000040 00      0   0  1
+  [ 8] .debug_info       PROGBITS        00000000 000524 0006e8 00      0   0  1
+  [ 9] .debug_abbrev     PROGBITS        00000000 000c0c 00030d 00      0   0  1
+  [10] .debug_line       PROGBITS        00000000 000f19 000488 00      0   0  1
+  [11] .debug_frame      PROGBITS        00000000 0013a4 000188 00      0   0  4
+  [12] .debug_str        PROGBITS        00000000 00152c 0001af 01  MS  0   0  1
+  [13] .debug_line_str   PROGBITS        00000000 0016db 00010e 01  MS  0   0  1
+  [14] .xt.lit           PROGBITS        00000000 0017e9 000010 00      0   0  1
+  [15] .xt.prop          PROGBITS        00000000 0017f9 0002a0 00      0   0  1
+  [16] .symtab           SYMTAB          00000000 001a9c 0002a0 10     17  18  4
+  [17] .strtab           STRTAB          00000000 001d3c 0000c6 00      0   0  1
+  [18] .shstrtab         STRTAB          00000000 001e02 0000b8 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  D (mbind), p (processor specific)
+
+There are no section groups in this file.
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  LOAD           0x000000 0x00400000 0x00400000 0x0046a 0x0046a R E 0x1000
+  LOAD           0x00046c 0x0040146c 0x0040146c 0x00011 0x00428 RW  0x1000
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .text .rodata 
+   01     .data .bss 
+
+There is no dynamic section in this file.
+
+There are no relocations in this file.
+
+The decoding of unwind sections for machine type Tensilica Xtensa Processor is not currently supported.
+
+Symbol table '.symtab' contains 42 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00400074     0 SECTION LOCAL  DEFAULT    1 .text
+     2: 00400448     0 SECTION LOCAL  DEFAULT    2 .rodata
+     3: 0040146c     0 SECTION LOCAL  DEFAULT    3 .data
+     4: 00401480     0 SECTION LOCAL  DEFAULT    4 .bss
+     5: 00000000     0 SECTION LOCAL  DEFAULT    5 .comment
+     6: 00000000     0 SECTION LOCAL  DEFAULT    6 .xtensa.info
+     7: 00000000     0 SECTION LOCAL  DEFAULT    7 .debug_aranges
+     8: 00000000     0 SECTION LOCAL  DEFAULT    8 .debug_info
+     9: 00000000     0 SECTION LOCAL  DEFAULT    9 .debug_abbrev
+    10: 00000000     0 SECTION LOCAL  DEFAULT   10 .debug_line
+    11: 00000000     0 SECTION LOCAL  DEFAULT   11 .debug_frame
+    12: 00000000     0 SECTION LOCAL  DEFAULT   12 .debug_str
+    13: 00000000     0 SECTION LOCAL  DEFAULT   13 .debug_line_str
+    14: 00000000     0 SECTION LOCAL  DEFAULT   14 .xt.lit
+    15: 00000000     0 SECTION LOCAL  DEFAULT   15 .xt.prop
+    16: 00000000     0 FILE    LOCAL  DEFAULT  ABS lib.c
+    17: 00000000     0 FILE    LOCAL  DEFAULT  ABS launcher.c
+    18: 004002ac   122 FUNC    GLOBAL DEFAULT    1 event_handler
+    19: 004001d0    28 FUNC    GLOBAL DEFAULT    1 print
+    20: 00401490     4 OBJECT  GLOBAL DEFAULT    4 click
+    21: 0040146c    17 OBJECT  GLOBAL DEFAULT    3 hexlist
+    22: 0040020c    34 FUNC    GLOBAL DEFAULT    1 malloc
+    23: 00401494  1024 OBJECT  GLOBAL DEFAULT    4 namelist
+    24: 00401488     4 OBJECT  GLOBAL DEFAULT    4 oldindex
+    25: 00401484     4 OBJECT  GLOBAL DEFAULT    4 launcherindex
+    26: 00400120    46 FUNC    GLOBAL DEFAULT    1 write
+    27: 00401480     4 OBJECT  GLOBAL DEFAULT    4 do_syscall
+    28: 004000ec    50 FUNC    GLOBAL DEFAULT    1 _start
+    29: 00400150    46 FUNC    GLOBAL DEFAULT    1 read
+    30: 00401480     0 NOTYPE  GLOBAL DEFAULT    4 __bss_start
+    31: 004003a0   167 FUNC    GLOBAL DEFAULT    1 main
+    32: 00400260    73 FUNC    GLOBAL DEFAULT    1 print_hex
+    33: 004001ec    32 FUNC    GLOBAL DEFAULT    1 delay
+    34: 00400230    32 FUNC    GLOBAL DEFAULT    1 run
+    35: 0040148c     4 OBJECT  GLOBAL DEFAULT    4 numfiles
+    36: 0040147d     0 NOTYPE  GLOBAL DEFAULT    3 _edata
+    37: 00401894     0 NOTYPE  GLOBAL DEFAULT    4 _end
+    38: 00400328   118 FUNC    GLOBAL DEFAULT    1 showmenu
+    39: 004000c4    38 FUNC    GLOBAL DEFAULT    1 strlen
+    40: 00400180    43 FUNC    GLOBAL DEFAULT    1 open
+    41: 004001ac    34 FUNC    GLOBAL DEFAULT    1 close
+
+No version information found in this file.
+
+Displaying notes found in: .xtensa.info
+  Owner                Data size 	Description
+  Xtensa_Info          0x00000020	NT_VERSION (version)
+   description data: 55 53 45 5f 41 42 53 4f 4c 55 54 45 5f 4c 49 54 45 52 41 4c 53 3d 30 0a 41 42 49 3d 30 0a 00 00 

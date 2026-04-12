@@ -28,6 +28,10 @@ void *psram_malloc(int size)
   alloc_meta *list;
   alloc_meta *block;
   block = (alloc_meta *)ps_malloc(8 + size);
+  if(!block)
+  {
+    return 0;
+  }
   Serial.printf("malloc size %d\n",size);
   block->next_alloc = 0;
   block->thread_id = get_current_thread();

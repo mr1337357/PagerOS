@@ -3,12 +3,17 @@
 #include "os_elf.h"
 #include "os_process.h"
 #include "fileops.h"
+#include "os_keyboard.h"
 
 typedef struct
 {
   int op;
 
 } os_op;
+
+SemaphoreHandle_t kEventSem;
+
+uint32_t os_event_mask = 0;
 
 int do_os_ops(void *arg)
 {
@@ -26,6 +31,16 @@ int do_os_ops(void *arg)
       }
     case 1:
       delay(*(int *)arg);
+      break;
+    case 2:
+      {
+        void *buffer = psram_malloc(*(int *)arg);
+        return int(buffer);
+        break;
+      }
+    case 3:
+      process_launch(*(char **)arg);
+      return 0;
       break;
   }
   return -1;
@@ -52,12 +67,23 @@ int do_syscall(int callnum, void *arg)
   return -1;
 }
 
+void os_wait_for_event()
+{
+  xSemaphoreTake(kEventSem, portMAX_DELAY);
+}
 
+void os_event_send(uint8_t event = 0)
+{
+  BaseType_t task;
+  os_event_mask |= (1<<event);
+  xSemaphoreGiveFromISR( kEventSem, &task);
+}
 
 void setup() {
   esp_err_t status;
   Serial.begin(115200);
   //tft.fillScreen(ST77XX_BLACK);
+  kEventSem = xSemaphoreCreateCounting(32, 0);
   hal_init();
   psramInit();
   psram_init();
@@ -72,5 +98,15 @@ int count = 0;
 
 void loop()
 {
-  delay(500);
+  os_wait_for_event();
+  if(os_event_mask & 1)
+  {
+    keyboard_handle_event();
+    os_event_mask &= ~1;
+  }
+  if(os_event_mask & 2)
+  {
+    wheel_handle_event();
+    os_event_mask &= ~2;
+  }
 }

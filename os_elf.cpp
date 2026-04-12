@@ -32,15 +32,19 @@ uint32_t elf_load_sections(File &app, uint32_t e_entry, int e_shoff, int e_shnum
   int global_table_size;
 
   uint32_t text = 0;
-  uint32_t text_len;
+  uint32_t text_len = 0;
   uint32_t text_vaddr;
 
   uint32_t rodata = 0;
-  uint32_t rodata_len;
+  uint32_t rodata_len = 0;
   uint32_t rodata_vaddr;
 
+  uint32_t data = 0;
+  uint32_t data_len = 0;
+  uint32_t data_vaddr;
+
   uint32_t bss = 0;
-  uint32_t bss_len;
+  uint32_t bss_len = 0;
   uint32_t bss_vaddr;
 
   offset = e_shoff;
@@ -62,6 +66,12 @@ uint32_t elf_load_sections(File &app, uint32_t e_entry, int e_shoff, int e_shnum
       rodata_len = shdr.sh_size;
       rodata_vaddr = shdr.sh_addr;
     }
+    if(!strcmp(&strtab[shdr.sh_name],".data"))
+    {
+      data = elf_place_in_ram(app,shdr.sh_offset,shdr.sh_size,shdr.sh_size);
+      data_len = shdr.sh_size;
+      data_vaddr = shdr.sh_addr;
+    }
     if(!strcmp(&strtab[shdr.sh_name],".bss"))
     {
       bss = elf_place_in_ram(app,shdr.sh_offset,shdr.sh_size,shdr.sh_size);
@@ -79,9 +89,21 @@ uint32_t elf_load_sections(File &app, uint32_t e_entry, int e_shoff, int e_shnum
       Serial.printf("global table size %d\n",global_table_size);
     }
   }
+  if(bss > 0)
+  {
+    for(i=0;i<bss_len;i++)
+    {
+      ((uint8_t *)bss)[i] = 0;
+    }
+  }
   Serial.printf("Text %08X => %08X\n",text_vaddr, text);
+  Serial.printf("size %d\n",text_len);
   Serial.printf("Rodata %08X => %08X\n",rodata_vaddr, rodata);
+  Serial.printf("size %d end %08X\n",rodata_len,rodata_vaddr + rodata_len);
+  Serial.printf("Data %08X => %08X\n",data_vaddr, data);
+  Serial.printf("size %d end %08X\n",data_len,data_vaddr + data_len);
   Serial.printf("Bss %08X => %08X\n",bss_vaddr,bss);
+  Serial.printf("size %d\n",bss_len);
   global_table = (uint32_t *)text;
   for(i=0;i<global_table_size;i++)
   {
@@ -97,6 +119,12 @@ uint32_t elf_load_sections(File &app, uint32_t e_entry, int e_shoff, int e_shnum
       Serial.printf("rodata pointer %08X",global_table[i]);
       global_table[i] -= rodata_vaddr;
       global_table[i] += rodata;
+    }
+    if(global_table[i] >= data_vaddr && global_table[i] <= data_vaddr + data_len)
+    {
+      Serial.printf("data pointer %08X",global_table[i]);
+      global_table[i] -= data_vaddr;
+      global_table[i] += data;
     }
     if(global_table[i] >= bss_vaddr && global_table[i] <= bss_vaddr + bss_len)
     {

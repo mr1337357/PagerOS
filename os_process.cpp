@@ -38,6 +38,29 @@ void process_set_eventHandler(void (*handler)(int, void *))
   process_list[pid].eventHandler = handler;
 }
 
+void process_send_event_active(int event, void *arg)
+{
+   if(process_list[active_app].eventHandler != 0)
+   {
+      process_list[active_app].eventHandler(event, arg);
+   }
+}
+
+void process_send_event_all(int event, void *arg)
+{
+   int i;
+   for(i = 0; i < 16; i++)
+   {
+      if(process_list[i].freertos_handle != 0)
+      {
+         if(process_list[i].eventHandler != 0)
+         {
+            process_list[i].eventHandler(event, arg);
+         }
+      }
+   }
+}
+
 void process_switch_active_app(int app)
 {
   int i;

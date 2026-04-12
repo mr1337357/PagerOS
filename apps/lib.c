@@ -2,6 +2,11 @@
 
 #include "lib.h"
 
+#define FOP_READ 0
+#define FOP_WRITE 1
+#define FOP_OPEN 2
+#define FOP_CLOSE 3
+
 typedef struct
 {
   int op;
@@ -32,7 +37,7 @@ void _start(void *syscall_handle)
 int write(int fd, char *buff, int len)
 {
    fileop fop;
-   fop.op = 1;
+   fop.op = FOP_WRITE;
    fop.fd = fd;
    fop.buffer = buff;
    fop.len = len;
@@ -42,22 +47,52 @@ int write(int fd, char *buff, int len)
 int read(int fd, char *buff, int len)
 {
    fileop fop;
-   fop.op = 0;
+   fop.op = FOP_READ;
    fop.fd = fd;
    fop.buffer = buff;
    fop.len = len;
    return do_syscall(1,&fop);
 }
 
+int open(char *name, int mode)
+{
+   fileop fop;
+   fop.op = FOP_OPEN;
+   fop.fd = mode;
+   fop.buffer = name;
+   fop.len = 0;
+   return do_syscall(1,&fop);
+}
+
+int close(int fd)
+{
+   fileop fop;
+   fop.op = FOP_CLOSE;
+   fop.fd = fd;
+   return do_syscall(1,&fop);
+}
+
 void print(char *message)
 {
-   write(0,message,strlen(message));
+   write(1,message,strlen(message));
 }
 
 void delay(int ms)
 {
    struct { int callnum; int ms; } delaycall = { 1, ms };
    do_syscall(0, &delaycall);
+}
+
+void *malloc(int len)
+{
+   struct { int callnum; int size; } malloccall = { 2, len};
+   return (void *)do_syscall(0, &malloccall);
+}
+
+void run(char *fname)
+{
+   struct { int callnum; char *fname; } runcall = { 3, fname};
+   do_syscall(0, &runcall);
 }
 
 __attribute((weak)) void event_handler(int event, void *arg)

@@ -1,5 +1,6 @@
 #include "hal.h"
 #include "textbox.h"
+#include "os_keyboard.h"
 
 textbox tb;
 
@@ -8,8 +9,6 @@ SPIClass hspi(HSPI);
 Adafruit_ST7796S tft = Adafruit_ST7796S(&hspi, DISP_CS, DISP_DC, DISP_RST);
 
 IoExpanderXL9555 io; 
-
-Adafruit_TCA8418 keypad;
 
 typedef struct
 {
@@ -101,9 +100,5 @@ void hal_init()
     tb.printf("sd found\n");
     Serial.println("detected SD card\n");
   }
-
-  if (! keypad.begin(TCA8418_DEFAULT_ADDR, &Wire)) {
-    Serial.println("keypad not found, check wiring & pullups!");
-    while (1);
-  }
+  keyboard_init();
 }
