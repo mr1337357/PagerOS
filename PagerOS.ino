@@ -85,13 +85,23 @@ void setup() {
   //tft.fillScreen(ST77XX_BLACK);
   kEventSem = xSemaphoreCreateCounting(32, 0);
   hal_init();
-  psramInit();
+  keyboard_init();
+  //psramInit();
   psram_init();
   process_init();
+  Serial.printf("%d\n",__LINE__);
+  keypad.readRegister(TCA8418_REG_INT_STAT);
   tb.set_visible(false);
+    Serial.printf("%d\n",__LINE__);
+  keypad.readRegister(TCA8418_REG_INT_STAT);
+    Serial.printf("%d\n",__LINE__);
   tft.fillScreen(0);
+    Serial.printf("%d\n",__LINE__);
+  keypad.readRegister(TCA8418_REG_INT_STAT);
   tb.printf("launching /apps/launcher.elf\n");
-  process_launch("/apps/launcher.elf");
+    Serial.printf("%d\n",__LINE__);
+  keypad.readRegister(TCA8418_REG_INT_STAT);
+  //process_launch("/apps/launcher.elf");
 }
 
 int count = 0;

@@ -100,5 +100,4 @@ void hal_init()
     tb.printf("sd found\n");
     Serial.println("detected SD card\n");
   }
-  keyboard_init();
 }

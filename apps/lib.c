@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <string.h>
 
 #include "lib.h"
 
@@ -14,13 +15,6 @@ typedef struct
   int len;
   uint8_t *buffer;
 } fileop;
-
-int strlen(char *msg)
-{
-   int len;
-   for(len=0;*msg++;len++);
-   return len;
-}
 
 int (*do_syscall)(int callnum, void *arg);
 

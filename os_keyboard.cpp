@@ -19,7 +19,6 @@ void wheel_interrupt()
 {
   new_wheel_state = digitalRead(40) | digitalRead(41) << 1;
   clicked |= !digitalRead(7);
-  Serial.printf("%02X\n",clicked);
   os_event_send(1);
 }
 
@@ -43,7 +42,6 @@ void keyboard_init()
   attachInterrupt(40,wheel_interrupt, CHANGE);
   attachInterrupt(41,wheel_interrupt, CHANGE);
   attachInterrupt(7 ,wheel_interrupt, CHANGE);
-
 }
 char keys[] = "~qwertyuiopasdfghjkl~~zxcvbnm~~~";
 char syms[] = "-1234567890*/+-=:'\"@--_$;?!,.---";
@@ -55,9 +53,11 @@ void keyboard_handle_event()
 {
   char letter = 0;
   bool press = false;
+  Serial.printf("KB\n");
   int intstat = keypad.readRegister(TCA8418_REG_INT_STAT);
   while(intstat)
   {
+    Serial.printf("KB\n");
     letter = 0;
     press = false;
     if(intstat & 1)

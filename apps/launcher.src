@@ -4,616 +4,819 @@ launcher.elf:     file format elf32-xtensa-le
 
 Disassembly of section .text:
 
-00400074 <strlen-0x50>:
-  400074:	004002ac 	
-  400078:	00401480 	
-  40007c:	004003a0 	
-  400080:	0040146c 	
-  400084:	004001d0 	
-  400088:	00401484 	
-  40008c:	00401490 	
-  400090:	0040148c 	
-  400094:	00400448 	
-  400098:	00400458 	
-  40009c:	0040045c 	
-  4000a0:	00401494 	
-  4000a4:	00400460 	
-  4000a8:	00400464 	
-  4000ac:	00400180 	
-  4000b0:	00400150 	
-  4000b4:	004001ac 	
-  4000b8:	004001ec 	
-  4000bc:	00401488 	
-  4000c0:	00400230 	
+00400074 <_start-0x60>:
+  400074:	004003a8 	
+  400078:	004015bc 	
+  40007c:	004004dc 	
+  400080:	0040024c 	
+  400084:	0040031c 	
+  400088:	004015a8 	
+  40008c:	004001b8 	
+  400090:	004015c0 	
+  400094:	004015cc 	
+  400098:	004015c8 	
+  40009c:	00400584 	
+  4000a0:	00400594 	
+  4000a4:	004002b4 	
+  4000a8:	00400598 	
+  4000ac:	004015d0 	
+  4000b0:	004002f4 	
+  4000b4:	0040059c 	
+  4000b8:	004005a0 	
+  4000bc:	00400168 	
+  4000c0:	00400138 	
+  4000c4:	00400194 	
+  4000c8:	004001d8 	
+  4000cc:	004015c4 	
+  4000d0:	0040021c 	
 
-004000c4 <strlen>:
-  int len;
-  uint8_t *buffer;
-} fileop;
-
-int strlen(char *msg)
-{
-  4000c4:	008136        	entry	a1, 64
-  4000c7:	017d      	mov.n	a7, a1
-  4000c9:	4729      	s32i.n	a2, a7, 16
-   int len;
-   for(len=0;*msg++;len++);
-  4000cb:	080c      	movi.n	a8, 0
-  4000cd:	0789      	s32i.n	a8, a7, 0
-  4000cf:	000146        	j	4000d8 <strlen+0x14>
-  4000d2:	0788      	l32i.n	a8, a7, 0
-  4000d4:	881b      	addi.n	a8, a8, 1
-  4000d6:	0789      	s32i.n	a8, a7, 0
-  4000d8:	4788      	l32i.n	a8, a7, 16
-  4000da:	981b      	addi.n	a9, a8, 1
-  4000dc:	4799      	s32i.n	a9, a7, 16
-  4000de:	000882        	l8ui	a8, a8, 0
-  4000e1:	fed856        	bnez	a8, 4000d2 <strlen+0xe>
-   return len;
-  4000e4:	0788      	l32i.n	a8, a7, 0
-}
-  4000e6:	082d      	mov.n	a2, a8
-  4000e8:	f01d      	retw.n
-	...
-
-004000ec <_start>:
+004000d4 <_start>:
 int (*do_syscall)(int callnum, void *arg);
 
 void main(int argc, char **argv);
 
 void _start(void *syscall_handle)
 {
-  4000ec:	008136        	entry	a1, 64
-  4000ef:	017d      	mov.n	a7, a1
-  4000f1:	4729      	s32i.n	a2, a7, 16
+  4000d4:	008136        	entry	a1, 64
+  4000d7:	017d      	mov.n	a7, a1
+  4000d9:	4729      	s32i.n	a2, a7, 16
    struct { int callnum; void (*handler)(int, void *);} eventcall = { 0, event_handler};
-  4000f3:	080c      	movi.n	a8, 0
-  4000f5:	0789      	s32i.n	a8, a7, 0
-  4000f7:	ffdf81        	l32r	a8, 400074 <strlen-0x50> (4002ac <event_handler>)
-  4000fa:	1789      	s32i.n	a8, a7, 4
+  4000db:	080c      	movi.n	a8, 0
+  4000dd:	0789      	s32i.n	a8, a7, 0
+  4000df:	ffe581        	l32r	a8, 400074 <_start-0x60> (4003a8 <event_handler>)
+  4000e2:	1789      	s32i.n	a8, a7, 4
    do_syscall = syscall_handle;
-  4000fc:	4798      	l32i.n	a9, a7, 16
-  4000fe:	ffde81        	l32r	a8, 400078 <strlen-0x4c> (401480 <do_syscall>)
-  400101:	0899      	s32i.n	a9, a8, 0
+  4000e4:	4798      	l32i.n	a9, a7, 16
+  4000e6:	ffe481        	l32r	a8, 400078 <_start-0x5c> (4015bc <do_syscall>)
+  4000e9:	0899      	s32i.n	a9, a8, 0
    do_syscall(0, &eventcall);
-  400103:	ffdd81        	l32r	a8, 400078 <strlen-0x4c> (401480 <do_syscall>)
-  400106:	0888      	l32i.n	a8, a8, 0
-  400108:	20b770        	or	a11, a7, a7
-  40010b:	0a0c      	movi.n	a10, 0
-  40010d:	0008e0        	callx8	a8
+  4000eb:	ffe381        	l32r	a8, 400078 <_start-0x5c> (4015bc <do_syscall>)
+  4000ee:	0888      	l32i.n	a8, a8, 0
+  4000f0:	20b770        	or	a11, a7, a7
+  4000f3:	0a0c      	movi.n	a10, 0
+  4000f5:	0008e0        	callx8	a8
    main(0,0);
-  400110:	0b0c      	movi.n	a11, 0
-  400112:	0a0c      	movi.n	a10, 0
-  400114:	ffda81        	l32r	a8, 40007c <strlen-0x48> (4003a0 <main>)
-  400117:	0008e0        	callx8	a8
+  4000f8:	0b0c      	movi.n	a11, 0
+  4000fa:	0a0c      	movi.n	a10, 0
+  4000fc:	ffe081        	l32r	a8, 40007c <_start-0x58> (4004dc <main>)
+  4000ff:	0008e0        	callx8	a8
 }
-  40011a:	f03d      	nop.n
-  40011c:	f01d      	retw.n
+  400102:	f03d      	nop.n
+  400104:	f01d      	retw.n
 	...
 
-00400120 <write>:
+00400108 <write>:
 
 int write(int fd, char *buff, int len)
 {
-  400120:	008136        	entry	a1, 64
-  400123:	017d      	mov.n	a7, a1
-  400125:	4729      	s32i.n	a2, a7, 16
-  400127:	5739      	s32i.n	a3, a7, 20
-  400129:	6749      	s32i.n	a4, a7, 24
+  400108:	008136        	entry	a1, 64
+  40010b:	017d      	mov.n	a7, a1
+  40010d:	4729      	s32i.n	a2, a7, 16
+  40010f:	5739      	s32i.n	a3, a7, 20
+  400111:	6749      	s32i.n	a4, a7, 24
    fileop fop;
    fop.op = FOP_WRITE;
-  40012b:	180c      	movi.n	a8, 1
-  40012d:	0789      	s32i.n	a8, a7, 0
+  400113:	180c      	movi.n	a8, 1
+  400115:	0789      	s32i.n	a8, a7, 0
    fop.fd = fd;
-  40012f:	4788      	l32i.n	a8, a7, 16
-  400131:	1789      	s32i.n	a8, a7, 4
+  400117:	4788      	l32i.n	a8, a7, 16
+  400119:	1789      	s32i.n	a8, a7, 4
    fop.buffer = buff;
-  400133:	5788      	l32i.n	a8, a7, 20
-  400135:	3789      	s32i.n	a8, a7, 12
+  40011b:	5788      	l32i.n	a8, a7, 20
+  40011d:	3789      	s32i.n	a8, a7, 12
    fop.len = len;
-  400137:	6788      	l32i.n	a8, a7, 24
-  400139:	2789      	s32i.n	a8, a7, 8
+  40011f:	6788      	l32i.n	a8, a7, 24
+  400121:	2789      	s32i.n	a8, a7, 8
    return do_syscall(1,&fop);
-  40013b:	ffcf81        	l32r	a8, 400078 <strlen-0x4c> (401480 <do_syscall>)
-  40013e:	0888      	l32i.n	a8, a8, 0
-  400140:	07bd      	mov.n	a11, a7
-  400142:	01a0a2        	movi	a10, 1
-  400145:	0008e0        	callx8	a8
-  400148:	0a8d      	mov.n	a8, a10
+  400123:	ffd581        	l32r	a8, 400078 <_start-0x5c> (4015bc <do_syscall>)
+  400126:	0888      	l32i.n	a8, a8, 0
+  400128:	07bd      	mov.n	a11, a7
+  40012a:	01a0a2        	movi	a10, 1
+  40012d:	0008e0        	callx8	a8
+  400130:	0a8d      	mov.n	a8, a10
 }
-  40014a:	082d      	mov.n	a2, a8
-  40014c:	f01d      	retw.n
+  400132:	082d      	mov.n	a2, a8
+  400134:	f01d      	retw.n
 	...
 
-00400150 <read>:
+00400138 <read>:
 
 int read(int fd, char *buff, int len)
 {
-  400150:	008136        	entry	a1, 64
-  400153:	017d      	mov.n	a7, a1
-  400155:	4729      	s32i.n	a2, a7, 16
-  400157:	5739      	s32i.n	a3, a7, 20
-  400159:	6749      	s32i.n	a4, a7, 24
+  400138:	008136        	entry	a1, 64
+  40013b:	017d      	mov.n	a7, a1
+  40013d:	4729      	s32i.n	a2, a7, 16
+  40013f:	5739      	s32i.n	a3, a7, 20
+  400141:	6749      	s32i.n	a4, a7, 24
    fileop fop;
    fop.op = FOP_READ;
-  40015b:	080c      	movi.n	a8, 0
-  40015d:	0789      	s32i.n	a8, a7, 0
+  400143:	080c      	movi.n	a8, 0
+  400145:	0789      	s32i.n	a8, a7, 0
    fop.fd = fd;
-  40015f:	4788      	l32i.n	a8, a7, 16
-  400161:	1789      	s32i.n	a8, a7, 4
+  400147:	4788      	l32i.n	a8, a7, 16
+  400149:	1789      	s32i.n	a8, a7, 4
    fop.buffer = buff;
-  400163:	5788      	l32i.n	a8, a7, 20
-  400165:	3789      	s32i.n	a8, a7, 12
+  40014b:	5788      	l32i.n	a8, a7, 20
+  40014d:	3789      	s32i.n	a8, a7, 12
    fop.len = len;
-  400167:	6788      	l32i.n	a8, a7, 24
-  400169:	2789      	s32i.n	a8, a7, 8
+  40014f:	6788      	l32i.n	a8, a7, 24
+  400151:	2789      	s32i.n	a8, a7, 8
    return do_syscall(1,&fop);
-  40016b:	ffc381        	l32r	a8, 400078 <strlen-0x4c> (401480 <do_syscall>)
-  40016e:	0888      	l32i.n	a8, a8, 0
-  400170:	07bd      	mov.n	a11, a7
-  400172:	01a0a2        	movi	a10, 1
-  400175:	0008e0        	callx8	a8
-  400178:	0a8d      	mov.n	a8, a10
+  400153:	ffc981        	l32r	a8, 400078 <_start-0x5c> (4015bc <do_syscall>)
+  400156:	0888      	l32i.n	a8, a8, 0
+  400158:	07bd      	mov.n	a11, a7
+  40015a:	01a0a2        	movi	a10, 1
+  40015d:	0008e0        	callx8	a8
+  400160:	0a8d      	mov.n	a8, a10
 }
-  40017a:	082d      	mov.n	a2, a8
-  40017c:	f01d      	retw.n
+  400162:	082d      	mov.n	a2, a8
+  400164:	f01d      	retw.n
 	...
 
-00400180 <open>:
+00400168 <open>:
 
 int open(char *name, int mode)
 {
-  400180:	008136        	entry	a1, 64
-  400183:	017d      	mov.n	a7, a1
-  400185:	4729      	s32i.n	a2, a7, 16
-  400187:	5739      	s32i.n	a3, a7, 20
+  400168:	008136        	entry	a1, 64
+  40016b:	017d      	mov.n	a7, a1
+  40016d:	4729      	s32i.n	a2, a7, 16
+  40016f:	5739      	s32i.n	a3, a7, 20
    fileop fop;
    fop.op = FOP_OPEN;
-  400189:	280c      	movi.n	a8, 2
-  40018b:	0789      	s32i.n	a8, a7, 0
+  400171:	280c      	movi.n	a8, 2
+  400173:	0789      	s32i.n	a8, a7, 0
    fop.fd = mode;
-  40018d:	5788      	l32i.n	a8, a7, 20
-  40018f:	1789      	s32i.n	a8, a7, 4
+  400175:	5788      	l32i.n	a8, a7, 20
+  400177:	1789      	s32i.n	a8, a7, 4
    fop.buffer = name;
-  400191:	4788      	l32i.n	a8, a7, 16
-  400193:	3789      	s32i.n	a8, a7, 12
+  400179:	4788      	l32i.n	a8, a7, 16
+  40017b:	3789      	s32i.n	a8, a7, 12
    fop.len = 0;
-  400195:	080c      	movi.n	a8, 0
-  400197:	2789      	s32i.n	a8, a7, 8
+  40017d:	080c      	movi.n	a8, 0
+  40017f:	2789      	s32i.n	a8, a7, 8
    return do_syscall(1,&fop);
-  400199:	ffb781        	l32r	a8, 400078 <strlen-0x4c> (401480 <do_syscall>)
-  40019c:	0888      	l32i.n	a8, a8, 0
-  40019e:	07bd      	mov.n	a11, a7
-  4001a0:	1a0c      	movi.n	a10, 1
-  4001a2:	0008e0        	callx8	a8
-  4001a5:	0a8d      	mov.n	a8, a10
+  400181:	ffbd81        	l32r	a8, 400078 <_start-0x5c> (4015bc <do_syscall>)
+  400184:	0888      	l32i.n	a8, a8, 0
+  400186:	07bd      	mov.n	a11, a7
+  400188:	1a0c      	movi.n	a10, 1
+  40018a:	0008e0        	callx8	a8
+  40018d:	0a8d      	mov.n	a8, a10
 }
-  4001a7:	082d      	mov.n	a2, a8
-  4001a9:	f01d      	retw.n
+  40018f:	082d      	mov.n	a2, a8
+  400191:	f01d      	retw.n
 	...
 
-004001ac <close>:
+00400194 <close>:
 
 int close(int fd)
 {
-  4001ac:	008136        	entry	a1, 64
-  4001af:	017d      	mov.n	a7, a1
-  4001b1:	4729      	s32i.n	a2, a7, 16
+  400194:	008136        	entry	a1, 64
+  400197:	017d      	mov.n	a7, a1
+  400199:	4729      	s32i.n	a2, a7, 16
    fileop fop;
    fop.op = FOP_CLOSE;
-  4001b3:	380c      	movi.n	a8, 3
-  4001b5:	0789      	s32i.n	a8, a7, 0
+  40019b:	380c      	movi.n	a8, 3
+  40019d:	0789      	s32i.n	a8, a7, 0
    fop.fd = fd;
-  4001b7:	4788      	l32i.n	a8, a7, 16
-  4001b9:	1789      	s32i.n	a8, a7, 4
+  40019f:	4788      	l32i.n	a8, a7, 16
+  4001a1:	1789      	s32i.n	a8, a7, 4
    return do_syscall(1,&fop);
-  4001bb:	ffaf81        	l32r	a8, 400078 <strlen-0x4c> (401480 <do_syscall>)
-  4001be:	0888      	l32i.n	a8, a8, 0
-  4001c0:	07bd      	mov.n	a11, a7
-  4001c2:	01a0a2        	movi	a10, 1
-  4001c5:	0008e0        	callx8	a8
-  4001c8:	0a8d      	mov.n	a8, a10
+  4001a3:	ffb581        	l32r	a8, 400078 <_start-0x5c> (4015bc <do_syscall>)
+  4001a6:	0888      	l32i.n	a8, a8, 0
+  4001a8:	07bd      	mov.n	a11, a7
+  4001aa:	01a0a2        	movi	a10, 1
+  4001ad:	0008e0        	callx8	a8
+  4001b0:	0a8d      	mov.n	a8, a10
 }
-  4001ca:	082d      	mov.n	a2, a8
-  4001cc:	f01d      	retw.n
+  4001b2:	082d      	mov.n	a2, a8
+  4001b4:	f01d      	retw.n
 	...
 
-004001d0 <print>:
+004001b8 <print>:
 
 void print(char *message)
 {
-  4001d0:	006136        	entry	a1, 48
-  4001d3:	017d      	mov.n	a7, a1
-  4001d5:	0729      	s32i.n	a2, a7, 0
+  4001b8:	006136        	entry	a1, 48
+  4001bb:	017d      	mov.n	a7, a1
+  4001bd:	0729      	s32i.n	a2, a7, 0
    write(1,message,strlen(message));
-  4001d7:	0027a2        	l32i	a10, a7, 0
-  4001da:	ffeea5        	call8	4000c4 <strlen>
-  4001dd:	0a8d      	mov.n	a8, a10
-  4001df:	08cd      	mov.n	a12, a8
-  4001e1:	07b8      	l32i.n	a11, a7, 0
-  4001e3:	1a0c      	movi.n	a10, 1
-  4001e5:	fff3a5        	call8	400120 <write>
+  4001bf:	0027a2        	l32i	a10, a7, 0
+  4001c2:	ffaf81        	l32r	a8, 400080 <_start-0x54> (40024c <strlen>)
+  4001c5:	0008e0        	callx8	a8
+  4001c8:	0a8d      	mov.n	a8, a10
+  4001ca:	08cd      	mov.n	a12, a8
+  4001cc:	07b8      	l32i.n	a11, a7, 0
+  4001ce:	01a0a2        	movi	a10, 1
+  4001d1:	fff365        	call8	400108 <write>
 }
-  4001e8:	f03d      	nop.n
-  4001ea:	f01d      	retw.n
+  4001d4:	f03d      	nop.n
+  4001d6:	f01d      	retw.n
 
-004001ec <delay>:
+004001d8 <delay>:
 
 void delay(int ms)
 {
-  4001ec:	008136        	entry	a1, 64
-  4001ef:	017d      	mov.n	a7, a1
-  4001f1:	4729      	s32i.n	a2, a7, 16
+  4001d8:	008136        	entry	a1, 64
+  4001db:	017d      	mov.n	a7, a1
+  4001dd:	4729      	s32i.n	a2, a7, 16
    struct { int callnum; int ms; } delaycall = { 1, ms };
-  4001f3:	180c      	movi.n	a8, 1
-  4001f5:	0789      	s32i.n	a8, a7, 0
-  4001f7:	4788      	l32i.n	a8, a7, 16
-  4001f9:	1789      	s32i.n	a8, a7, 4
+  4001df:	180c      	movi.n	a8, 1
+  4001e1:	0789      	s32i.n	a8, a7, 0
+  4001e3:	4788      	l32i.n	a8, a7, 16
+  4001e5:	1789      	s32i.n	a8, a7, 4
    do_syscall(0, &delaycall);
-  4001fb:	ff9f81        	l32r	a8, 400078 <strlen-0x4c> (401480 <do_syscall>)
-  4001fe:	0888      	l32i.n	a8, a8, 0
-  400200:	07bd      	mov.n	a11, a7
-  400202:	00a0a2        	movi	a10, 0
-  400205:	0008e0        	callx8	a8
+  4001e7:	ffa481        	l32r	a8, 400078 <_start-0x5c> (4015bc <do_syscall>)
+  4001ea:	0888      	l32i.n	a8, a8, 0
+  4001ec:	07bd      	mov.n	a11, a7
+  4001ee:	00a0a2        	movi	a10, 0
+  4001f1:	0008e0        	callx8	a8
 }
-  400208:	f03d      	nop.n
-  40020a:	f01d      	retw.n
+  4001f4:	f03d      	nop.n
+  4001f6:	f01d      	retw.n
 
-0040020c <malloc>:
+004001f8 <malloc>:
 
 void *malloc(int len)
 {
-  40020c:	008136        	entry	a1, 64
-  40020f:	017d      	mov.n	a7, a1
-  400211:	4729      	s32i.n	a2, a7, 16
+  4001f8:	008136        	entry	a1, 64
+  4001fb:	017d      	mov.n	a7, a1
+  4001fd:	4729      	s32i.n	a2, a7, 16
    struct { int callnum; int size; } malloccall = { 2, len};
-  400213:	280c      	movi.n	a8, 2
-  400215:	0789      	s32i.n	a8, a7, 0
-  400217:	4788      	l32i.n	a8, a7, 16
-  400219:	1789      	s32i.n	a8, a7, 4
+  4001ff:	280c      	movi.n	a8, 2
+  400201:	0789      	s32i.n	a8, a7, 0
+  400203:	4788      	l32i.n	a8, a7, 16
+  400205:	1789      	s32i.n	a8, a7, 4
    return (void *)do_syscall(0, &malloccall);
-  40021b:	ff9781        	l32r	a8, 400078 <strlen-0x4c> (401480 <do_syscall>)
-  40021e:	0888      	l32i.n	a8, a8, 0
-  400220:	07bd      	mov.n	a11, a7
-  400222:	00a0a2        	movi	a10, 0
-  400225:	0008e0        	callx8	a8
-  400228:	0a8d      	mov.n	a8, a10
+  400207:	ff9c81        	l32r	a8, 400078 <_start-0x5c> (4015bc <do_syscall>)
+  40020a:	0888      	l32i.n	a8, a8, 0
+  40020c:	07bd      	mov.n	a11, a7
+  40020e:	00a0a2        	movi	a10, 0
+  400211:	0008e0        	callx8	a8
+  400214:	0a8d      	mov.n	a8, a10
 }
-  40022a:	082d      	mov.n	a2, a8
-  40022c:	f01d      	retw.n
+  400216:	082d      	mov.n	a2, a8
+  400218:	f01d      	retw.n
 	...
 
-00400230 <run>:
+0040021c <run>:
 
 void run(char *fname)
 {
-  400230:	008136        	entry	a1, 64
-  400233:	017d      	mov.n	a7, a1
-  400235:	4729      	s32i.n	a2, a7, 16
+  40021c:	008136        	entry	a1, 64
+  40021f:	017d      	mov.n	a7, a1
+  400221:	4729      	s32i.n	a2, a7, 16
    struct { int callnum; char *fname; } runcall = { 3, fname};
-  400237:	380c      	movi.n	a8, 3
-  400239:	0789      	s32i.n	a8, a7, 0
-  40023b:	4788      	l32i.n	a8, a7, 16
-  40023d:	1789      	s32i.n	a8, a7, 4
+  400223:	380c      	movi.n	a8, 3
+  400225:	0789      	s32i.n	a8, a7, 0
+  400227:	4788      	l32i.n	a8, a7, 16
+  400229:	1789      	s32i.n	a8, a7, 4
    do_syscall(0, &runcall);
-  40023f:	ff8e81        	l32r	a8, 400078 <strlen-0x4c> (401480 <do_syscall>)
-  400242:	0888      	l32i.n	a8, a8, 0
-  400244:	07bd      	mov.n	a11, a7
-  400246:	00a0a2        	movi	a10, 0
-  400249:	0008e0        	callx8	a8
+  40022b:	ff9381        	l32r	a8, 400078 <_start-0x5c> (4015bc <do_syscall>)
+  40022e:	0888      	l32i.n	a8, a8, 0
+  400230:	07bd      	mov.n	a11, a7
+  400232:	00a0a2        	movi	a10, 0
+  400235:	0008e0        	callx8	a8
 }
-  40024c:	f03d      	nop.n
-  40024e:	f01d      	retw.n
+  400238:	f03d      	nop.n
+  40023a:	f01d      	retw.n
 
 __attribute((weak)) void event_handler(int event, void *arg)
 {
-  400250:	006136        	entry	a1, 48
-  400253:	017d      	mov.n	a7, a1
-  400255:	0729      	s32i.n	a2, a7, 0
-  400257:	1739      	s32i.n	a3, a7, 4
+  40023c:	006136        	entry	a1, 48
+  40023f:	017d      	mov.n	a7, a1
+  400241:	0729      	s32i.n	a2, a7, 0
+  400243:	1739      	s32i.n	a3, a7, 4
    (void) event;
    (void) arg;
 }
-  400259:	f03d      	nop.n
-  40025b:	f01d      	retw.n
-  40025d:	000000        	ill
+  400245:	f03d      	nop.n
+  400247:	f01d      	retw.n
+  400249:	000000        	ill
 
-00400260 <print_hex>:
+0040024c <strlen>:
+#include <string.h>
+#include <stdint.h>
+
+size_t strlen(const char *msg)
+{
+  40024c:	008136        	entry	a1, 64
+  40024f:	017d      	mov.n	a7, a1
+  400251:	4729      	s32i.n	a2, a7, 16
+   size_t len;
+   for(len=0;*msg++;len++);
+  400253:	080c      	movi.n	a8, 0
+  400255:	0789      	s32i.n	a8, a7, 0
+  400257:	000146        	j	400260 <strlen+0x14>
+  40025a:	0788      	l32i.n	a8, a7, 0
+  40025c:	881b      	addi.n	a8, a8, 1
+  40025e:	0789      	s32i.n	a8, a7, 0
+  400260:	4788      	l32i.n	a8, a7, 16
+  400262:	981b      	addi.n	a9, a8, 1
+  400264:	4799      	s32i.n	a9, a7, 16
+  400266:	000882        	l8ui	a8, a8, 0
+  400269:	fed856        	bnez	a8, 40025a <strlen+0xe>
+   return len;
+  40026c:	0788      	l32i.n	a8, a7, 0
+}
+  40026e:	082d      	mov.n	a2, a8
+  400270:	f01d      	retw.n
+	...
+
+00400274 <mempcpy>:
+
+void *mempcpy(void *restrict dest, const void *restrict src, size_t n)
+{
+  400274:	008136        	entry	a1, 64
+  400277:	017d      	mov.n	a7, a1
+  400279:	4729      	s32i.n	a2, a7, 16
+  40027b:	5739      	s32i.n	a3, a7, 20
+  40027d:	6749      	s32i.n	a4, a7, 24
+   int i;
+   uint8_t *dstp = dest;
+  40027f:	4788      	l32i.n	a8, a7, 16
+  400281:	1789      	s32i.n	a8, a7, 4
+   const uint8_t *srcp = src;
+  400283:	5788      	l32i.n	a8, a7, 20
+  400285:	2789      	s32i.n	a8, a7, 8
+   for(i=0;i<n;i++)
+  400287:	080c      	movi.n	a8, 0
+  400289:	0789      	s32i.n	a8, a7, 0
+  40028b:	0005c6        	j	4002a6 <mempcpy+0x32>
+   {
+      *dstp++ = srcp[i];
+  40028e:	0788      	l32i.n	a8, a7, 0
+  400290:	2798      	l32i.n	a9, a7, 8
+  400292:	998a      	add.n	a9, a9, a8
+  400294:	1788      	l32i.n	a8, a7, 4
+  400296:	a81b      	addi.n	a10, a8, 1
+  400298:	17a9      	s32i.n	a10, a7, 4
+  40029a:	000992        	l8ui	a9, a9, 0
+  40029d:	004892        	s8i	a9, a8, 0
+   for(i=0;i<n;i++)
+  4002a0:	0788      	l32i.n	a8, a7, 0
+  4002a2:	881b      	addi.n	a8, a8, 1
+  4002a4:	0789      	s32i.n	a8, a7, 0
+  4002a6:	0798      	l32i.n	a9, a7, 0
+  4002a8:	6788      	l32i.n	a8, a7, 24
+  4002aa:	e03987        	bltu	a9, a8, 40028e <mempcpy+0x1a>
+   }
+   return dstp;
+  4002ad:	1788      	l32i.n	a8, a7, 4
+}
+  4002af:	082d      	mov.n	a2, a8
+  4002b1:	f01d      	retw.n
+	...
+
+004002b4 <memcpy>:
+
+void *memcpy (void *restrict dest, const void *restrict src, size_t len)
+{
+  4002b4:	008136        	entry	a1, 64
+  4002b7:	017d      	mov.n	a7, a1
+  4002b9:	4729      	s32i.n	a2, a7, 16
+  4002bb:	5739      	s32i.n	a3, a7, 20
+  4002bd:	6749      	s32i.n	a4, a7, 24
+   int i;
+   uint8_t *dstp = dest;
+  4002bf:	4788      	l32i.n	a8, a7, 16
+  4002c1:	1789      	s32i.n	a8, a7, 4
+   const uint8_t *srcp = src;
+  4002c3:	5788      	l32i.n	a8, a7, 20
+  4002c5:	2789      	s32i.n	a8, a7, 8
+   for(i=0;i<len;i++)
+  4002c7:	080c      	movi.n	a8, 0
+  4002c9:	0789      	s32i.n	a8, a7, 0
+  4002cb:	0005c6        	j	4002e6 <memcpy+0x32>
+   {
+      dstp[i] = srcp[i];
+  4002ce:	0788      	l32i.n	a8, a7, 0
+  4002d0:	2798      	l32i.n	a9, a7, 8
+  4002d2:	998a      	add.n	a9, a9, a8
+  4002d4:	0788      	l32i.n	a8, a7, 0
+  4002d6:	17a8      	l32i.n	a10, a7, 4
+  4002d8:	8a8a      	add.n	a8, a10, a8
+  4002da:	000992        	l8ui	a9, a9, 0
+  4002dd:	004892        	s8i	a9, a8, 0
+   for(i=0;i<len;i++)
+  4002e0:	0788      	l32i.n	a8, a7, 0
+  4002e2:	881b      	addi.n	a8, a8, 1
+  4002e4:	0789      	s32i.n	a8, a7, 0
+  4002e6:	0798      	l32i.n	a9, a7, 0
+  4002e8:	6788      	l32i.n	a8, a7, 24
+  4002ea:	e03987        	bltu	a9, a8, 4002ce <memcpy+0x1a>
+   }
+   return dest;
+  4002ed:	4788      	l32i.n	a8, a7, 16
+}
+  4002ef:	082d      	mov.n	a2, a8
+  4002f1:	f01d      	retw.n
+	...
+
+004002f4 <stpcpy>:
+
+char *stpcpy(char *restrict dst, const char *restrict src)
+{
+  4002f4:	008136        	entry	a1, 64
+  4002f7:	017d      	mov.n	a7, a1
+  4002f9:	4729      	s32i.n	a2, a7, 16
+  4002fb:	5739      	s32i.n	a3, a7, 20
+    char  *p;
+
+    p = mempcpy(dst, src, strlen(src));
+  4002fd:	57a8      	l32i.n	a10, a7, 20
+  4002ff:	fff4e5        	call8	40024c <strlen>
+  400302:	0a8d      	mov.n	a8, a10
+  400304:	08cd      	mov.n	a12, a8
+  400306:	57b8      	l32i.n	a11, a7, 20
+  400308:	47a8      	l32i.n	a10, a7, 16
+  40030a:	fff6a5        	call8	400274 <mempcpy>
+  40030d:	07a9      	s32i.n	a10, a7, 0
+    *p = '\0';
+  40030f:	0788      	l32i.n	a8, a7, 0
+  400311:	090c      	movi.n	a9, 0
+  400313:	004892        	s8i	a9, a8, 0
+
+    return p;
+  400316:	0788      	l32i.n	a8, a7, 0
+}
+  400318:	082d      	mov.n	a2, a8
+  40031a:	f01d      	retw.n
+
+0040031c <strcpy>:
+
+char *strcpy(char *restrict dst, const char *restrict src)
+{
+  40031c:	006136        	entry	a1, 48
+  40031f:	017d      	mov.n	a7, a1
+  400321:	0729      	s32i.n	a2, a7, 0
+  400323:	1739      	s32i.n	a3, a7, 4
+    stpcpy(dst, src);
+  400325:	17b8      	l32i.n	a11, a7, 4
+  400327:	0027a2        	l32i	a10, a7, 0
+  40032a:	ff5681        	l32r	a8, 400084 <_start-0x50> (40031c <strcpy>)
+  40032d:	0008e0        	callx8	a8
+    return dst;
+  400330:	0788      	l32i.n	a8, a7, 0
+}
+  400332:	082d      	mov.n	a2, a8
+  400334:	f01d      	retw.n
+	...
+
+00400338 <strcat>:
+
+char *strcat(char *restrict dst, const char *restrict src)
+{
+  400338:	006136        	entry	a1, 48
+  40033b:	017d      	mov.n	a7, a1
+  40033d:	0729      	s32i.n	a2, a7, 0
+  40033f:	1739      	s32i.n	a3, a7, 4
+    stpcpy(dst + strlen(dst), src);
+  400341:	07a8      	l32i.n	a10, a7, 0
+  400343:	fff0a5        	call8	40024c <strlen>
+  400346:	0a9d      	mov.n	a9, a10
+  400348:	0788      	l32i.n	a8, a7, 0
+  40034a:	889a      	add.n	a8, a8, a9
+  40034c:	17b8      	l32i.n	a11, a7, 4
+  40034e:	08ad      	mov.n	a10, a8
+  400350:	ff4d81        	l32r	a8, 400084 <_start-0x50> (40031c <strcpy>)
+  400353:	0008e0        	callx8	a8
+    return dst;
+  400356:	0788      	l32i.n	a8, a7, 0
+}
+  400358:	082d      	mov.n	a2, a8
+  40035a:	f01d      	retw.n
+
+0040035c <print_hex>:
 char namelist[16][64];
 
 char hexlist[] = "0123456789ABCDEF";
 
 void print_hex(int num)
 {
-  400260:	008136        	entry	a1, 64
-  400263:	017d      	mov.n	a7, a1
-  400265:	4729      	s32i.n	a2, a7, 16
+  40035c:	008136        	entry	a1, 64
+  40035f:	017d      	mov.n	a7, a1
+  400361:	4729      	s32i.n	a2, a7, 16
    char hex[9];
    int i;
    for(i=7;i>=0;i--)
-  400267:	780c      	movi.n	a8, 7
-  400269:	0789      	s32i.n	a8, a7, 0
-  40026b:	000886        	j	400291 <print_hex+0x31>
+  400363:	780c      	movi.n	a8, 7
+  400365:	0789      	s32i.n	a8, a7, 0
+  400367:	000886        	j	40038d <print_hex+0x31>
    {
       hex[i] = hexlist[num & 0x0F];
-  40026e:	4788      	l32i.n	a8, a7, 16
-  400270:	348080        	extui	a8, a8, 0, 4
-  400273:	ff8391        	l32r	a9, 400080 <strlen-0x44> (40146c <hexlist>)
-  400276:	898a      	add.n	a8, a9, a8
-  400278:	000892        	l8ui	a9, a8, 0
-  40027b:	a74b      	addi.n	a10, a7, 4
-  40027d:	0788      	l32i.n	a8, a7, 0
-  40027f:	8a8a      	add.n	a8, a10, a8
-  400281:	004892        	s8i	a9, a8, 0
+  40036a:	4788      	l32i.n	a8, a7, 16
+  40036c:	348080        	extui	a8, a8, 0, 4
+  40036f:	ff4691        	l32r	a9, 400088 <_start-0x4c> (4015a8 <hexlist>)
+  400372:	898a      	add.n	a8, a9, a8
+  400374:	000892        	l8ui	a9, a8, 0
+  400377:	a74b      	addi.n	a10, a7, 4
+  400379:	0788      	l32i.n	a8, a7, 0
+  40037b:	8a8a      	add.n	a8, a10, a8
+  40037d:	004892        	s8i	a9, a8, 0
       num >>= 4;
-  400284:	4788      	l32i.n	a8, a7, 16
-  400286:	218480        	srai	a8, a8, 4
-  400289:	4789      	s32i.n	a8, a7, 16
+  400380:	4788      	l32i.n	a8, a7, 16
+  400382:	218480        	srai	a8, a8, 4
+  400385:	4789      	s32i.n	a8, a7, 16
    for(i=7;i>=0;i--)
-  40028b:	0788      	l32i.n	a8, a7, 0
-  40028d:	880b      	addi.n	a8, a8, -1
-  40028f:	0789      	s32i.n	a8, a7, 0
-  400291:	0788      	l32i.n	a8, a7, 0
-  400293:	fd78d6        	bgez	a8, 40026e <print_hex+0xe>
+  400387:	0788      	l32i.n	a8, a7, 0
+  400389:	880b      	addi.n	a8, a8, -1
+  40038b:	0789      	s32i.n	a8, a7, 0
+  40038d:	0788      	l32i.n	a8, a7, 0
+  40038f:	fd78d6        	bgez	a8, 40036a <print_hex+0xe>
    }
    hex[8] = 0;
-  400296:	080c      	movi.n	a8, 0
-  400298:	0c4782        	s8i	a8, a7, 12
+  400392:	080c      	movi.n	a8, 0
+  400394:	0c4782        	s8i	a8, a7, 12
    print(hex);
-  40029b:	874b      	addi.n	a8, a7, 4
-  40029d:	08ad      	mov.n	a10, a8
-  40029f:	ff7981        	l32r	a8, 400084 <strlen-0x40> (4001d0 <print>)
-  4002a2:	0008e0        	callx8	a8
+  400397:	874b      	addi.n	a8, a7, 4
+  400399:	08ad      	mov.n	a10, a8
+  40039b:	ff3c81        	l32r	a8, 40008c <_start-0x48> (4001b8 <print>)
+  40039e:	0008e0        	callx8	a8
 }
-  4002a5:	f03d      	nop.n
-  4002a7:	f01d      	retw.n
-  4002a9:	000000        	ill
+  4003a1:	f03d      	nop.n
+  4003a3:	f01d      	retw.n
+  4003a5:	000000        	ill
 
-004002ac <event_handler>:
+004003a8 <event_handler>:
 
 void event_handler(int event, void *arg)
 {
-  4002ac:	008136        	entry	a1, 64
-  4002af:	017d      	mov.n	a7, a1
-  4002b1:	4729      	s32i.n	a2, a7, 16
-  4002b3:	5739      	s32i.n	a3, a7, 20
+  4003a8:	008136        	entry	a1, 64
+  4003ab:	017d      	mov.n	a7, a1
+  4003ad:	4729      	s32i.n	a2, a7, 16
+  4003af:	5739      	s32i.n	a3, a7, 20
    switch(event)
-  4002b5:	4788      	l32i.n	a8, a7, 16
-  4002b7:	671866        	bnei	a8, 1, 400322 <event_handler+0x76>
+  4003b1:	4788      	l32i.n	a8, a7, 16
+  4003b3:	671866        	bnei	a8, 1, 40041e <event_handler+0x76>
    {
       case 1: //EVENT_WHEEL
          int dir = (int)arg;
-  4002ba:	5788      	l32i.n	a8, a7, 20
-  4002bc:	0789      	s32i.n	a8, a7, 0
+  4003b6:	5788      	l32i.n	a8, a7, 20
+  4003b8:	0789      	s32i.n	a8, a7, 0
          if(dir&1)
-  4002be:	0788      	l32i.n	a8, a7, 0
-  4002c0:	048080        	extui	a8, a8, 0, 1
-  4002c3:	a88c      	beqz.n	a8, 4002d1 <event_handler+0x25>
+  4003ba:	0788      	l32i.n	a8, a7, 0
+  4003bc:	048080        	extui	a8, a8, 0, 1
+  4003bf:	a88c      	beqz.n	a8, 4003cd <event_handler+0x25>
          {
             launcherindex++;
-  4002c5:	ff7081        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  4002c8:	0888      	l32i.n	a8, a8, 0
-  4002ca:	981b      	addi.n	a9, a8, 1
-  4002cc:	ff6f81        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  4002cf:	0899      	s32i.n	a9, a8, 0
+  4003c1:	ff3381        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  4003c4:	0888      	l32i.n	a8, a8, 0
+  4003c6:	981b      	addi.n	a9, a8, 1
+  4003c8:	ff3281        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  4003cb:	0899      	s32i.n	a9, a8, 0
          }
          if(dir&2)
-  4002d1:	0798      	l32i.n	a9, a7, 0
-  4002d3:	280c      	movi.n	a8, 2
-  4002d5:	108980        	and	a8, a9, a8
-  4002d8:	a88c      	beqz.n	a8, 4002e6 <event_handler+0x3a>
+  4003cd:	0798      	l32i.n	a9, a7, 0
+  4003cf:	280c      	movi.n	a8, 2
+  4003d1:	108980        	and	a8, a9, a8
+  4003d4:	a88c      	beqz.n	a8, 4003e2 <event_handler+0x3a>
          {
             launcherindex--;
-  4002da:	ff6b81        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  4002dd:	0888      	l32i.n	a8, a8, 0
-  4002df:	980b      	addi.n	a9, a8, -1
-  4002e1:	ff6981        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  4002e4:	0899      	s32i.n	a9, a8, 0
+  4003d6:	ff2e81        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  4003d9:	0888      	l32i.n	a8, a8, 0
+  4003db:	980b      	addi.n	a9, a8, -1
+  4003dd:	ff2c81        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  4003e0:	0899      	s32i.n	a9, a8, 0
          }
          if(dir&4)
-  4002e6:	0798      	l32i.n	a9, a7, 0
-  4002e8:	480c      	movi.n	a8, 4
-  4002ea:	108980        	and	a8, a9, a8
-  4002ed:	788c      	beqz.n	a8, 4002f8 <event_handler+0x4c>
+  4003e2:	0798      	l32i.n	a9, a7, 0
+  4003e4:	480c      	movi.n	a8, 4
+  4003e6:	108980        	and	a8, a9, a8
+  4003e9:	788c      	beqz.n	a8, 4003f4 <event_handler+0x4c>
          {
             click = 1;
-  4002ef:	ff6781        	l32r	a8, 40008c <strlen-0x38> (401490 <click>)
-  4002f2:	01a092        	movi	a9, 1
-  4002f5:	006892        	s32i	a9, a8, 0
+  4003eb:	ff2a81        	l32r	a8, 400094 <_start-0x40> (4015cc <click>)
+  4003ee:	01a092        	movi	a9, 1
+  4003f1:	006892        	s32i	a9, a8, 0
          }
          if(launcherindex < 0)
-  4002f8:	ff6481        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  4002fb:	0888      	l32i.n	a8, a8, 0
-  4002fd:	00b8d6        	bgez	a8, 40030c <event_handler+0x60>
+  4003f4:	ff2781        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  4003f7:	0888      	l32i.n	a8, a8, 0
+  4003f9:	00b8d6        	bgez	a8, 400408 <event_handler+0x60>
          {
             launcherindex = numfiles - 1;
-  400300:	ff6481        	l32r	a8, 400090 <strlen-0x34> (40148c <numfiles>)
-  400303:	0888      	l32i.n	a8, a8, 0
-  400305:	980b      	addi.n	a9, a8, -1
-  400307:	ff6081        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  40030a:	0899      	s32i.n	a9, a8, 0
+  4003fc:	ff2781        	l32r	a8, 400098 <_start-0x3c> (4015c8 <numfiles>)
+  4003ff:	0888      	l32i.n	a8, a8, 0
+  400401:	980b      	addi.n	a9, a8, -1
+  400403:	ff2381        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  400406:	0899      	s32i.n	a9, a8, 0
          }
          if(launcherindex >= numfiles)
-  40030c:	ff5f81        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  40030f:	0898      	l32i.n	a9, a8, 0
-  400311:	ff5f81        	l32r	a8, 400090 <strlen-0x34> (40148c <numfiles>)
-  400314:	0888      	l32i.n	a8, a8, 0
-  400316:	062987        	blt	a9, a8, 400320 <event_handler+0x74>
+  400408:	ff2281        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  40040b:	0898      	l32i.n	a9, a8, 0
+  40040d:	ff2281        	l32r	a8, 400098 <_start-0x3c> (4015c8 <numfiles>)
+  400410:	0888      	l32i.n	a8, a8, 0
+  400412:	062987        	blt	a9, a8, 40041c <event_handler+0x74>
          {
             launcherindex = 0;
-  400319:	ff5b81        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  40031c:	090c      	movi.n	a9, 0
-  40031e:	0899      	s32i.n	a9, a8, 0
+  400415:	ff1e81        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  400418:	090c      	movi.n	a9, 0
+  40041a:	0899      	s32i.n	a9, a8, 0
          }
          break;
-  400320:	f03d      	nop.n
+  40041c:	f03d      	nop.n
    }
 }
-  400322:	f03d      	nop.n
-  400324:	f01d      	retw.n
+  40041e:	f03d      	nop.n
+  400420:	f01d      	retw.n
 	...
 
-00400328 <showmenu>:
+00400424 <showmenu>:
 
 void showmenu()
 {
-  400328:	006136        	entry	a1, 48
-  40032b:	017d      	mov.n	a7, a1
+  400424:	00e136        	entry	a1, 112
+  400427:	017d      	mov.n	a7, a1
    int i;
+   char linebuffer[64];
+   char *destbuffer;
+
    print("\e0;0HLAUNCHER\n");
-  40032d:	ff5981        	l32r	a8, 400094 <strlen-0x30> (400448 <main+0xa8>)
-  400330:	08ad      	mov.n	a10, a8
-  400332:	ff5481        	l32r	a8, 400084 <strlen-0x40> (4001d0 <print>)
-  400335:	0008e0        	callx8	a8
+  400429:	ff1c81        	l32r	a8, 40009c <_start-0x38> (400584 <main+0xa8>)
+  40042c:	08ad      	mov.n	a10, a8
+  40042e:	ff1781        	l32r	a8, 40008c <_start-0x48> (4001b8 <print>)
+  400431:	0008e0        	callx8	a8
    for(i=0;i<numfiles;i++)
-  400338:	080c      	movi.n	a8, 0
-  40033a:	0789      	s32i.n	a8, a7, 0
-  40033c:	001386        	j	40038e <showmenu+0x66>
-  40033f:	00          	.byte	00
-  400340:	00          	.byte	00
+  400434:	080c      	movi.n	a8, 0
+  400436:	0789      	s32i.n	a8, a7, 0
+  400438:	002286        	j	4004c6 <showmenu+0xa2>
+  40043b:	00          	.byte	00
+  40043c:	00          	.byte	00
    {
-      if(launcherindex == i+1)
-  400341:	0788      	l32i.n	a8, a7, 0
-  400343:	981b      	addi.n	a9, a8, 1
-  400345:	ff5081        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  400348:	0888      	l32i.n	a8, a8, 0
-  40034a:	0f9987        	bne	a9, a8, 40035d <showmenu+0x35>
+      destbuffer = linebuffer;
+  40043d:	878b      	addi.n	a8, a7, 8
+  40043f:	1789      	s32i.n	a8, a7, 4
+      if(launcherindex == i)
+  400441:	ff1381        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  400444:	0888      	l32i.n	a8, a8, 0
+  400446:	0798      	l32i.n	a9, a7, 0
+  400448:	1d9987        	bne	a9, a8, 400469 <showmenu+0x45>
+  40044b:	1798      	l32i.n	a9, a7, 4
+  40044d:	ff1481        	l32r	a8, 4000a0 <_start-0x34> (400594 <main+0xb8>)
+  400450:	08ad      	mov.n	a10, a8
+  400452:	380c      	movi.n	a8, 3
+  400454:	08cd      	mov.n	a12, a8
+  400456:	0abd      	mov.n	a11, a10
+  400458:	09ad      	mov.n	a10, a9
+  40045a:	ff1281        	l32r	a8, 4000a4 <_start-0x30> (4002b4 <memcpy>)
+  40045d:	0008e0        	callx8	a8
       {
-         print("> ");
-  40034d:	ff5281        	l32r	a8, 400098 <strlen-0x2c> (400458 <main+0xb8>)
-  400350:	08ad      	mov.n	a10, a8
-  400352:	ff4c81        	l32r	a8, 400084 <strlen-0x40> (4001d0 <print>)
-  400355:	0008e0        	callx8	a8
-  400358:	000306        	j	400368 <showmenu+0x40>
-  40035b:	00          	.byte	00
-  40035c:	00          	.byte	00
+         destbuffer = stpcpy(destbuffer,"> ");
+  400460:	1788      	l32i.n	a8, a7, 4
+  400462:	882b      	addi.n	a8, a8, 2
+  400464:	1789      	s32i.n	a8, a7, 4
+  400466:	000686        	j	400484 <showmenu+0x60>
+  400469:	1798      	l32i.n	a9, a7, 4
+  40046b:	ff0f81        	l32r	a8, 4000a8 <_start-0x2c> (400598 <main+0xbc>)
+  40046e:	08ad      	mov.n	a10, a8
+  400470:	380c      	movi.n	a8, 3
+  400472:	08cd      	mov.n	a12, a8
+  400474:	0abd      	mov.n	a11, a10
+  400476:	09ad      	mov.n	a10, a9
+  400478:	ff0b81        	l32r	a8, 4000a4 <_start-0x30> (4002b4 <memcpy>)
+  40047b:	0008e0        	callx8	a8
       }
       else
       {
-         print("  ");
-  40035d:	ff4f81        	l32r	a8, 40009c <strlen-0x28> (40045c <main+0xbc>)
-  400360:	08ad      	mov.n	a10, a8
-  400362:	ff4881        	l32r	a8, 400084 <strlen-0x40> (4001d0 <print>)
-  400365:	0008e0        	callx8	a8
+         destbuffer = stpcpy(destbuffer,"  ");
+  40047e:	1788      	l32i.n	a8, a7, 4
+  400480:	882b      	addi.n	a8, a8, 2
+  400482:	1789      	s32i.n	a8, a7, 4
       }
-      print(namelist[i]);
-  400368:	002782        	l32i	a8, a7, 0
-  40036b:	1198a0        	slli	a9, a8, 6
-  40036e:	ff4c81        	l32r	a8, 4000a0 <strlen-0x24> (401494 <namelist>)
-  400371:	808980        	add	a8, a9, a8
-  400374:	20a880        	or	a10, a8, a8
-  400377:	ff4381        	l32r	a8, 400084 <strlen-0x40> (4001d0 <print>)
-  40037a:	0008e0        	callx8	a8
-      print("\n");
-  40037d:	ff4981        	l32r	a8, 4000a4 <strlen-0x20> (400460 <main+0xc0>)
-  400380:	08ad      	mov.n	a10, a8
-  400382:	ff4081        	l32r	a8, 400084 <strlen-0x40> (4001d0 <print>)
-  400385:	0008e0        	callx8	a8
+      destbuffer = stpcpy(destbuffer, namelist[i]);
+  400484:	0788      	l32i.n	a8, a7, 0
+  400486:	1198a0        	slli	a9, a8, 6
+  400489:	ff0881        	l32r	a8, 4000ac <_start-0x28> (4015d0 <namelist>)
+  40048c:	898a      	add.n	a8, a9, a8
+  40048e:	08bd      	mov.n	a11, a8
+  400490:	0127a2        	l32i	a10, a7, 4
+  400493:	ff0781        	l32r	a8, 4000b0 <_start-0x24> (4002f4 <stpcpy>)
+  400496:	0008e0        	callx8	a8
+  400499:	17a9      	s32i.n	a10, a7, 4
+  40049b:	1798      	l32i.n	a9, a7, 4
+  40049d:	ff0581        	l32r	a8, 4000b4 <_start-0x20> (40059c <main+0xc0>)
+  4004a0:	08ad      	mov.n	a10, a8
+  4004a2:	280c      	movi.n	a8, 2
+  4004a4:	08cd      	mov.n	a12, a8
+  4004a6:	0abd      	mov.n	a11, a10
+  4004a8:	09ad      	mov.n	a10, a9
+  4004aa:	fefe81        	l32r	a8, 4000a4 <_start-0x30> (4002b4 <memcpy>)
+  4004ad:	0008e0        	callx8	a8
+      destbuffer = stpcpy(destbuffer,"\n");
+  4004b0:	1788      	l32i.n	a8, a7, 4
+  4004b2:	881b      	addi.n	a8, a8, 1
+  4004b4:	1789      	s32i.n	a8, a7, 4
+      print(linebuffer);
+  4004b6:	878b      	addi.n	a8, a7, 8
+  4004b8:	08ad      	mov.n	a10, a8
+  4004ba:	fef481        	l32r	a8, 40008c <_start-0x48> (4001b8 <print>)
+  4004bd:	0008e0        	callx8	a8
    for(i=0;i<numfiles;i++)
-  400388:	0788      	l32i.n	a8, a7, 0
-  40038a:	881b      	addi.n	a8, a8, 1
-  40038c:	0789      	s32i.n	a8, a7, 0
-  40038e:	ff4081        	l32r	a8, 400090 <strlen-0x34> (40148c <numfiles>)
-  400391:	0888      	l32i.n	a8, a8, 0
-  400393:	0798      	l32i.n	a9, a7, 0
-  400395:	a82987        	blt	a9, a8, 400341 <showmenu+0x19>
+  4004c0:	0788      	l32i.n	a8, a7, 0
+  4004c2:	881b      	addi.n	a8, a8, 1
+  4004c4:	0789      	s32i.n	a8, a7, 0
+  4004c6:	fef481        	l32r	a8, 400098 <_start-0x3c> (4015c8 <numfiles>)
+  4004c9:	0888      	l32i.n	a8, a8, 0
+  4004cb:	0798      	l32i.n	a9, a7, 0
+  4004cd:	02a987        	bge	a9, a8, 4004d3 <showmenu+0xaf>
+  4004d0:	ffda46        	j	40043d <showmenu+0x19>
    }
 }
-  400398:	f03d      	nop.n
-  40039a:	f03d      	nop.n
-  40039c:	f01d      	retw.n
-	...
+  4004d3:	f03d      	nop.n
+  4004d5:	f03d      	nop.n
+  4004d7:	f01d      	retw.n
+  4004d9:	000000        	ill
 
-004003a0 <main>:
+004004dc <main>:
 
 int main(int argc, char **argv)
 {
-  4003a0:	008136        	entry	a1, 64
-  4003a3:	017d      	mov.n	a7, a1
-  4003a5:	4729      	s32i.n	a2, a7, 16
-  4003a7:	5739      	s32i.n	a3, a7, 20
+  4004dc:	008136        	entry	a1, 64
+  4004df:	017d      	mov.n	a7, a1
+  4004e1:	4729      	s32i.n	a2, a7, 16
+  4004e3:	5739      	s32i.n	a3, a7, 20
    int appdir = open("/apps",FILEMODE_R);
-  4003a9:	ff3f81        	l32r	a8, 4000a8 <strlen-0x1c> (400464 <main+0xc4>)
-  4003ac:	0b0c      	movi.n	a11, 0
-  4003ae:	08ad      	mov.n	a10, a8
-  4003b0:	ff3f81        	l32r	a8, 4000ac <strlen-0x18> (400180 <open>)
-  4003b3:	0008e0        	callx8	a8
-  4003b6:	07a9      	s32i.n	a10, a7, 0
+  4004e5:	fef481        	l32r	a8, 4000b8 <_start-0x1c> (4005a0 <main+0xc4>)
+  4004e8:	0b0c      	movi.n	a11, 0
+  4004ea:	08ad      	mov.n	a10, a8
+  4004ec:	fef481        	l32r	a8, 4000bc <_start-0x18> (400168 <open>)
+  4004ef:	0008e0        	callx8	a8
+  4004f2:	07a9      	s32i.n	a10, a7, 0
    numfiles = 0;
-  4003b8:	ff3681        	l32r	a8, 400090 <strlen-0x34> (40148c <numfiles>)
-  4003bb:	090c      	movi.n	a9, 0
-  4003bd:	0899      	s32i.n	a9, a8, 0
+  4004f4:	fee981        	l32r	a8, 400098 <_start-0x3c> (4015c8 <numfiles>)
+  4004f7:	090c      	movi.n	a9, 0
+  4004f9:	0899      	s32i.n	a9, a8, 0
    launcherindex = 0;
-  4003bf:	ff3281        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  4003c2:	090c      	movi.n	a9, 0
-  4003c4:	0899      	s32i.n	a9, a8, 0
+  4004fb:	fee581        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  4004fe:	090c      	movi.n	a9, 0
+  400500:	0899      	s32i.n	a9, a8, 0
    while(read(appdir,namelist[numfiles],64) > 0)
-  4003c6:	0002c6        	j	4003d5 <main+0x35>
+  400502:	0002c6        	j	400511 <main+0x35>
    {
       //print(namelist[numfiles]);
       //print("\n");
       numfiles++;
-  4003c9:	ff3181        	l32r	a8, 400090 <strlen-0x34> (40148c <numfiles>)
-  4003cc:	0888      	l32i.n	a8, a8, 0
-  4003ce:	981b      	addi.n	a9, a8, 1
-  4003d0:	ff3081        	l32r	a8, 400090 <strlen-0x34> (40148c <numfiles>)
-  4003d3:	0899      	s32i.n	a9, a8, 0
+  400505:	fee481        	l32r	a8, 400098 <_start-0x3c> (4015c8 <numfiles>)
+  400508:	0888      	l32i.n	a8, a8, 0
+  40050a:	981b      	addi.n	a9, a8, 1
+  40050c:	fee381        	l32r	a8, 400098 <_start-0x3c> (4015c8 <numfiles>)
+  40050f:	0899      	s32i.n	a9, a8, 0
    while(read(appdir,namelist[numfiles],64) > 0)
-  4003d5:	ff2e81        	l32r	a8, 400090 <strlen-0x34> (40148c <numfiles>)
-  4003d8:	0888      	l32i.n	a8, a8, 0
-  4003da:	1198a0        	slli	a9, a8, 6
-  4003dd:	ff3081        	l32r	a8, 4000a0 <strlen-0x24> (401494 <namelist>)
-  4003e0:	898a      	add.n	a8, a9, a8
-  4003e2:	0c4c      	movi.n	a12, 64
-  4003e4:	08bd      	mov.n	a11, a8
-  4003e6:	07a8      	l32i.n	a10, a7, 0
-  4003e8:	ff3281        	l32r	a8, 4000b0 <strlen-0x14> (400150 <read>)
-  4003eb:	0008e0        	callx8	a8
-  4003ee:	0a8d      	mov.n	a8, a10
-  4003f0:	d518e6        	bgei	a8, 1, 4003c9 <main+0x29>
+  400511:	fee181        	l32r	a8, 400098 <_start-0x3c> (4015c8 <numfiles>)
+  400514:	0888      	l32i.n	a8, a8, 0
+  400516:	1198a0        	slli	a9, a8, 6
+  400519:	fee481        	l32r	a8, 4000ac <_start-0x28> (4015d0 <namelist>)
+  40051c:	898a      	add.n	a8, a9, a8
+  40051e:	0c4c      	movi.n	a12, 64
+  400520:	08bd      	mov.n	a11, a8
+  400522:	07a8      	l32i.n	a10, a7, 0
+  400524:	fee781        	l32r	a8, 4000c0 <_start-0x14> (400138 <read>)
+  400527:	0008e0        	callx8	a8
+  40052a:	0a8d      	mov.n	a8, a10
+  40052c:	d518e6        	bgei	a8, 1, 400505 <main+0x29>
    }
    close(appdir);
-  4003f3:	0027a2        	l32i	a10, a7, 0
-  4003f6:	ff2f81        	l32r	a8, 4000b4 <strlen-0x10> (4001ac <close>)
-  4003f9:	0008e0        	callx8	a8
+  40052f:	0027a2        	l32i	a10, a7, 0
+  400532:	fee481        	l32r	a8, 4000c4 <_start-0x10> (400194 <close>)
+  400535:	0008e0        	callx8	a8
    while(1)
    {
       delay(100);
-  4003fc:	64a0a2        	movi	a10, 100
-  4003ff:	ff2e81        	l32r	a8, 4000b8 <strlen-0xc> (4001ec <delay>)
-  400402:	0008e0        	callx8	a8
+  400538:	64a0a2        	movi	a10, 100
+  40053b:	fee381        	l32r	a8, 4000c8 <_start-0xc> (4001d8 <delay>)
+  40053e:	0008e0        	callx8	a8
       if(launcherindex != oldindex)
-  400405:	ff2081        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  400408:	0898      	l32i.n	a9, a8, 0
-  40040a:	ff2c81        	l32r	a8, 4000bc <strlen-0x8> (401488 <oldindex>)
-  40040d:	0888      	l32i.n	a8, a8, 0
-  40040f:	0d1987        	beq	a9, a8, 400420 <main+0x80>
+  400541:	fed381        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  400544:	0898      	l32i.n	a9, a8, 0
+  400546:	fee181        	l32r	a8, 4000cc <_start-0x8> (4015c4 <oldindex>)
+  400549:	0888      	l32i.n	a8, a8, 0
+  40054b:	0d1987        	beq	a9, a8, 40055c <main+0x80>
       {
          oldindex = launcherindex;
-  400412:	ff1d81        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  400415:	0898      	l32i.n	a9, a8, 0
-  400417:	ff2981        	l32r	a8, 4000bc <strlen-0x8> (401488 <oldindex>)
-  40041a:	006892        	s32i	a9, a8, 0
+  40054e:	fed081        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  400551:	0898      	l32i.n	a9, a8, 0
+  400553:	fede81        	l32r	a8, 4000cc <_start-0x8> (4015c4 <oldindex>)
+  400556:	006892        	s32i	a9, a8, 0
          showmenu();
-  40041d:	fff0a5        	call8	400328 <showmenu>
+  400559:	ffeca5        	call8	400424 <showmenu>
       }
       if(click)
-  400420:	ff1b81        	l32r	a8, 40008c <strlen-0x38> (401490 <click>)
-  400423:	0888      	l32i.n	a8, a8, 0
-  400425:	fd3816        	beqz	a8, 4003fc <main+0x5c>
+  40055c:	fece81        	l32r	a8, 400094 <_start-0x40> (4015cc <click>)
+  40055f:	0888      	l32i.n	a8, a8, 0
+  400561:	fd3816        	beqz	a8, 400538 <main+0x5c>
       {
          click = 0;
-  400428:	ff1981        	l32r	a8, 40008c <strlen-0x38> (401490 <click>)
-  40042b:	090c      	movi.n	a9, 0
-  40042d:	0899      	s32i.n	a9, a8, 0
+  400564:	fecc81        	l32r	a8, 400094 <_start-0x40> (4015cc <click>)
+  400567:	090c      	movi.n	a9, 0
+  400569:	0899      	s32i.n	a9, a8, 0
          run(namelist[launcherindex]);
-  40042f:	ff1681        	l32r	a8, 400088 <strlen-0x3c> (401484 <launcherindex>)
-  400432:	0888      	l32i.n	a8, a8, 0
-  400434:	1198a0        	slli	a9, a8, 6
-  400437:	ff1a81        	l32r	a8, 4000a0 <strlen-0x24> (401494 <namelist>)
-  40043a:	898a      	add.n	a8, a9, a8
-  40043c:	08ad      	mov.n	a10, a8
-  40043e:	ff2081        	l32r	a8, 4000c0 <strlen-0x4> (400230 <run>)
-  400441:	0008e0        	callx8	a8
+  40056b:	fec981        	l32r	a8, 400090 <_start-0x44> (4015c0 <launcherindex>)
+  40056e:	0888      	l32i.n	a8, a8, 0
+  400570:	1198a0        	slli	a9, a8, 6
+  400573:	fece81        	l32r	a8, 4000ac <_start-0x28> (4015d0 <namelist>)
+  400576:	898a      	add.n	a8, a9, a8
+  400578:	08ad      	mov.n	a10, a8
+  40057a:	fed581        	l32r	a8, 4000d0 <_start-0x4> (40021c <run>)
+  40057d:	0008e0        	callx8	a8
       delay(100);
-  400444:	ffed06        	j	4003fc <main+0x5c>
+  400580:	ffed06        	j	400538 <main+0x5c>

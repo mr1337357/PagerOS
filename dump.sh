@@ -1,4 +1,5 @@
-PREFIX=/home/misspapaya/.arduino15/packages/esp32/tools/esp-x32/2511/bin/xtensa-esp32s3-elf
+VERSION=2601
+PREFIX=/home/misspapaya/.arduino15/packages/esp32/tools/esp-x32/${VERSION}/bin/xtensa-esp32s3-elf
 ADDR2LINE=${PREFIX}-addr2line
 CC=${PREFIX}-gcc
 STRIP=${PREFIX}-strip

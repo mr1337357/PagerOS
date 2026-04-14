@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "lib.h"
 
 int launcherindex = 0;
@@ -55,21 +57,24 @@ void event_handler(int event, void *arg)
 void showmenu()
 {
    int i;
-   char *linebuffer[64];
+   char linebuffer[64];
+   char *destbuffer;
 
    print("\e0;0HLAUNCHER\n");
    for(i=0;i<numfiles;i++)
    {
+      destbuffer = linebuffer;
       if(launcherindex == i)
       {
-         strcpy(
+         destbuffer = stpcpy(destbuffer,"> ");
       }
       else
       {
-         print("  ");
+         destbuffer = stpcpy(destbuffer,"  ");
       }
-      print(namelist[i]);
-      print("\n");
+      destbuffer = stpcpy(destbuffer, namelist[i]);
+      destbuffer = stpcpy(destbuffer,"\n");
+      print(linebuffer);
    }
 }
 

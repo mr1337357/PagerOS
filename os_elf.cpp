@@ -80,11 +80,15 @@ uint32_t elf_load_sections(File &app, uint32_t e_entry, int e_shoff, int e_shnum
     }
     if(!strcmp(&strtab[shdr.sh_name],".xt.lit"))
     {
-      uint32_t got_meta[4];
+      uint32_t got_meta[2];
+      int j;
       app.seek(shdr.sh_offset);
-      app.read((uint8_t *)got_meta,16);
-      global_table_size = got_meta[1];
-      global_table_size += got_meta[3];
+      global_table_size = 0;
+      for(j=0;j<shdr.sh_size;j+=8)
+      {
+        app.read((uint8_t *)got_meta,8);
+        global_table_size += got_meta[1];
+      }
       global_table_size /= 4;
       Serial.printf("global table size %d\n",global_table_size);
     }

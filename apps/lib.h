@@ -3,8 +3,6 @@ extern int (*do_syscall)(int callnum, void *arg);
 #define FILEMODE_R 0
 #define FILEMODE_W 1
 
-int strlen(char *msg);
-
 void print(char *message);
 
 int write(int fd, char *buff, int len);
